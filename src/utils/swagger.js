@@ -9,7 +9,7 @@ const swaggerDefinition = {
   },
   servers: [
     { url: 'https://diary-app-demo-v1.azurewebsites.net/api/v1', description: 'Deployed server' },
-    { url: 'http://localhost:5000/api/v1', description: 'Local development/testing server' },
+    { url: 'http://localhost:3000/api/v1', description: 'Local development/testing server' },
   ],
   components: {
     securitySchemes: {
