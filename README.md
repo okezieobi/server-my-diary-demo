@@ -1,5 +1,5 @@
 # server-my-diary-demo-v1
-API for MyDiary, an online journal where users can pen down their thoughts and feelings
+REST API for MyDiary, an online journal where users can pen down their thoughts and feelings
 
 ## API docs
 https://diary-app-demo-v1.azurewebsites.net/api-docs
@@ -12,5 +12,5 @@ https://diary-app-demo-v1.azurewebsites.net/api-docs
 ## Optional Features
 - Users send requests set and get daily notifications that prompt them to add an entry to their diary.
 
-##
+## Stack
 PERN

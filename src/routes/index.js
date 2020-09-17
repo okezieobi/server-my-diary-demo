@@ -4,7 +4,7 @@ const router = Router();
 
 /* GET users listing. */
 router.get('/', (req, res) => {
-  res.send({ data: 'respond with a resource' });
+  res.send({ data: 'respond with a resource at endpoint root' });
 });
 
 export default router;
