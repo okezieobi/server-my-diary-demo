@@ -12,5 +12,5 @@ https://diary-app-demo-v1.azurewebsites.net/api-docs
 ## Optional Features
 - Users send requests set and get daily notifications that prompt them to add an entry to their diary.
 
-##
+## Stack
 PERN
