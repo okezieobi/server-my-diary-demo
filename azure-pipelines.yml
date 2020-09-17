@@ -19,11 +19,7 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: AzureRmWebAppDeployment@4
+- task: CopyFiles@2
   inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1(1)(97fcf2b8-09d0-440e-9184-fa8a3ebcbd65)'
-    appType: 'webAppLinux'
-    WebAppName: 'diary-app-demo'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'NODE|12-lts'
+    sourceFolder: $(Build.SourcesDirectory)
+    targetFolder: $(Build.ArtifactStagingDirectory)
