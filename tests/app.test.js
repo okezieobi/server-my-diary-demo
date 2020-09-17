@@ -7,4 +7,9 @@ describe('Test app for setup', () => {
     const { body: { data } } = await request(app).get('/');
     expect(data).toMatch(/respond with a resource at endpoint root/);
   });
+
+  it('Testing ', async () => {
+    const { body: { data } } = await request(app).get('/users');
+    expect(data).toMatch(/respond with a resource/);
+  });
 });
