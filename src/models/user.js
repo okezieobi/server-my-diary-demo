@@ -4,8 +4,8 @@ import jwtUtil from '../utils/jwt';
 import bcryptUtil from '../utils/bcrypt';
 
 export default class User extends Model {
-  static async createOne(data, sequelize) {
-    return sequelize.transaction(async (t) => this.create(data, { transaction: t }));
+  static async createOne(user, sequelize) {
+    return sequelize.transaction(async (t) => this.create(user, { transaction: t }));
   }
 
   static async findByUnique({ email, username }, sequelize) {
@@ -62,14 +62,13 @@ export default class User extends Model {
       },
       {
         hooks: {
-          afterCreate: (user) => {
+          afterCreate: async (user) => {
             const placeholder = user;
-            placeholder.token = jwtUtil.generate(user);
-            placeholder.status = 201;
+            placeholder.token = await jwtUtil.generate(placeholder);
           },
           beforeCreate: async (user) => {
             const placeholder = user;
-            placeholder.password = await bcryptUtil.hashString(user.password);
+            placeholder.password = await bcryptUtil.hashString(placeholder.password);
           },
         },
         sequelize,

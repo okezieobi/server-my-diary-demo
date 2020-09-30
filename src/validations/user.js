@@ -1,10 +1,8 @@
-export default class UserSchemas {
-  constructor(schema) {
-    this.schema = schema;
-  }
+import { checkSchema } from 'express-validator';
 
-  validateLogin() {
-    return this.schema({
+export default class UserSchemas {
+  static validateLogin() {
+    return checkSchema({
       user: {
         in: ['body'],
         isLength: {
@@ -36,8 +34,8 @@ export default class UserSchemas {
     });
   }
 
-  validateSignup() {
-    return this.schema({
+  static validateSignup() {
+    return checkSchema({
       username: {
         in: ['body'],
         isLength: {
