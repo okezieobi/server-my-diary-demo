@@ -28,6 +28,6 @@ Object.values(models)
 })();
 
 export default {
-  models,
+  ...models,
   sequelize,
 };
