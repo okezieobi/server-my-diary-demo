@@ -6,8 +6,7 @@ import passport from '../utils/passport';
 
 const router = Router();
 
-router.post('/signup', [validations.UserSchema.validateSignup(),
-  validations.handleValidationErr,
+router.post('/signup', [...[validations.signup],
   passport.authenticate('signup', { session: false })], controllers.UserController.create);
 
 export default router;

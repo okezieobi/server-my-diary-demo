@@ -1,11 +1,23 @@
 import { Model, DataTypes, Op } from 'sequelize';
 
-import jwtUtil from '../utils/jwt';
 import bcryptUtil from '../utils/bcrypt';
 
 export default class User extends Model {
   static async createOne(user, sequelize) {
-    return sequelize.transaction(async (t) => this.create(user, { transaction: t }));
+    return sequelize.transaction(async (t) => {
+      await this.create(user, { transaction: t });
+      return this.findOne({
+        where: {
+          [Op.and]: [
+            { email: user.email }, { username: user.username },
+          ],
+        },
+        transaction: t,
+        attributes: {
+          exclude: ['password'],
+        },
+      });
+    });
   }
 
   static async findByUnique({ email, username }, sequelize) {
@@ -62,10 +74,6 @@ export default class User extends Model {
       },
       {
         hooks: {
-          afterCreate: async (user) => {
-            const placeholder = user;
-            placeholder.token = await jwtUtil.generate(placeholder);
-          },
           beforeCreate: async (user) => {
             const placeholder = user;
             placeholder.password = await bcryptUtil.hashString(placeholder.password);
