@@ -97,7 +97,7 @@ const terminate = (serverApp, options = { coredump: false, timeout: 500 }) => {
   return (code, reason) => (err, promise) => {
     if (err && err instanceof Error) {
       // Log error information, use a proper logging library here :)
-      console.error(err.message, err.stack);
+      console.error(err.name, err.message, err.stack);
     }
 
     // Attempt a graceful shutdown
@@ -115,7 +115,7 @@ const exitHandler = terminate(server, {
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port, () => console.log(`App is live on ${port}`));
+server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 

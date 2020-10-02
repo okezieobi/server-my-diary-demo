@@ -2,14 +2,25 @@
   "name": "server-my-diary-demo-v1",
   "version": "0.0.0",
   "private": true,
+  "main": "jest.config.js",
+  "directories": {
+    "test": "tests"
+  },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/bin/www.js",
+    "dev": " DEBUG=server-my-diary-demo-v1:* nodemon --exec babel-node src/bin/www.js",
     "release": "npm run clean && npm run build-app && npm run start",
     "clean": "rm -rf dist && mkdir dist",
     "build": "npm run clean && npm run build-app",
     "build-app": "babel src -s -d dist --presets=@babel/env",
     "start": "node dist/bin/www.js",
-    "test": "jest tests/index.test.js"
+    "test": "NODE_ENV=test jest tests/index.test.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "pretest": "NODE_ENV=test npm run migrate:undo && NODE_ENV=test npm run migrate && NODE_ENV=test npm run seed",
+    "seed": "npx sequelize-cli db:seed:all",
+    "seed:undo": "npx sequelize-cli db:seed:undo",
+    "migrate:user-skeleton": "npx sequelize-cli migration:generate --name User",
+    "seed:user-skeleton": "npx sequelize-cli seed:generate --name User"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -41,6 +52,8 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "jest": "^26.4.2",
+    "jest-chain": "^1.1.5",
+    "jest-extended": "^0.11.5",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.2.0",
     "superagent": "^6.1.0",

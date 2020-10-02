@@ -65,6 +65,9 @@ export default class User extends Model {
           type: DataTypes.TEXT,
           allowNull: false,
           notEmpty: true,
+          set(value) {
+            this.setDataValue('password', bcryptUtil.hashString(value));
+          },
         },
         type: {
           type: DataTypes.TEXT,
@@ -73,12 +76,6 @@ export default class User extends Model {
         },
       },
       {
-        hooks: {
-          beforeCreate: async (user) => {
-            const placeholder = user;
-            placeholder.password = await bcryptUtil.hashString(placeholder.password);
-          },
-        },
         sequelize,
         modelName: 'User',
         timestamps: true,

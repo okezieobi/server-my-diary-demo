@@ -21,7 +21,7 @@ Object.values(models)
 (async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: true, match: /mydiary$/ });
   } catch (err) {
     await error(err);
   }

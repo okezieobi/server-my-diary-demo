@@ -4,9 +4,9 @@ import jwt from '../utils/jwt';
 export default class UserController {
   static async create({ body }, res, next) {
     try {
-      const newUser = await services.UserServices.create(body);
-      const token = await jwt.generate(newUser);
-      res.status(201).send({ data: { token, newUser } });
+      const user = await services.UserServices.create(body);
+      const token = await jwt.generate(user);
+      res.status(201).send({ data: { token, user } });
     } catch (err) {
       next(err);
     }
