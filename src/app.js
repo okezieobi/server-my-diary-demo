@@ -19,9 +19,9 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use('/api/v1', routes);
 
 // eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  if (res.status !== 500) res.status(400).json({ error: err });
-  else next(err);
+app.use((error, req, res, next) => {
+  if (error.stack) next(error);
+  else res.status(400).json({ error });
 });
 
 export default app;

@@ -1,9 +1,9 @@
 export default {
-  users: {
+  user: {
     mock: {
-      fullName: 'test-fullName',
-      username: 'test-username',
-      email: 'test@email.com',
+      fullName: 'test-fullName-2',
+      username: 'test-username-2',
+      email: 'tester@email.com',
       password: 'test-password',
     },
   },
