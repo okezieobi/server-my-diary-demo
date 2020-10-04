@@ -3,8 +3,6 @@ import Sequelize from 'sequelize';
 import UserModel from './user';
 import env from '../utils/env';
 
-const { error } = console;
-
 const sequelize = new Sequelize(env.databaseURL, { ssl: true, dialect: 'postgres' });
 // pass your sequelize config here
 
@@ -19,12 +17,8 @@ Object.values(models)
   .forEach((model) => model.associate(models));
 
 (async () => {
-  try {
-    await sequelize.authenticate();
-    await sequelize.sync({ force: true, match: /mydiarydev$/ });
-  } catch (err) {
-    await error(err);
-  }
+  await sequelize.authenticate();
+  await sequelize.sync();
 })();
 
 export default {

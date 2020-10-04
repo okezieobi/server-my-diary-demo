@@ -1,3 +1,9 @@
+[![Actions Status](https://github.com/{okezieobi}/{https://github.com/okezieobi/server-my-diary-demo}/workflows/{Node.js%20CI}/badge.svg)](https://github.com/{okezieobi}/{https://github.com/okezieobi/server-my-diary-demo}/actions)
+
+[![Actions Status](https://github.com/{okezieobi}/{https://github.com/okezieobi/server-my-diary-demo}/workflows/{npm%20install,%20build,%20and%20test}/badge.svg)](https://github.com/{okezieobi}/{https://github.com/okezieobi/server-my-diary-demo}/actions)
+
+[![Actions Status](https://github.com/{okezieobi}/{https://github.com/okezieobi/server-my-diary-demo}/workflows/{Deploy%20to%20Azure%20WebApp}/badge.svg)](https://github.com/{okezieobi}/{https://github.com/okezieobi/server-my-diary-demo}/actions)
+
 # server-my-diary-demo-v1
 REST API for MyDiary, an online journal where users can pen down their thoughts and feelings
 

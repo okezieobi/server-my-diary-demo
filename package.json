@@ -13,14 +13,7 @@
     "build": "npm run clean && npm run build-app",
     "build-app": "babel src -s -d dist --presets=@babel/env",
     "start": "node dist/bin/www.js",
-    "test": "NODE_ENV=test jest tests/index.test.js",
-    "migrate": "npx sequelize-cli db:migrate",
-    "migrate:undo": "npx sequelize-cli db:migrate:undo",
-    "pretest": "NODE_ENV=test npm run migrate:undo && NODE_ENV=test npm run migrate && NODE_ENV=test npm run seed",
-    "seed": "npx sequelize-cli db:seed:all",
-    "seed:undo": "npx sequelize-cli db:seed:undo",
-    "migrate:user-skeleton": "npx sequelize-cli migration:generate --name User",
-    "seed:user-skeleton": "npx sequelize-cli seed:generate --name User"
+    "test": "NODE_ENV=test jest tests/index.test.js '--detectOpenHandles'"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -40,7 +33,8 @@
     "regenerator-runtime": "^0.13.7",
     "sequelize": "^6.3.5",
     "swagger-jsdoc": "^4.0.0",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-ui-express": "^4.1.4",
+    "umzug": "^3.0.0-beta.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -55,7 +49,6 @@
     "jest-chain": "^1.1.5",
     "jest-extended": "^0.11.5",
     "nodemon": "^2.0.4",
-    "sequelize-cli": "^6.2.0",
     "superagent": "^6.1.0",
     "supertest": "^4.0.2"
   }

@@ -78,7 +78,6 @@ export default class User extends Model {
       {
         sequelize,
         modelName: 'User',
-        timestamps: true,
       },
     );
   }

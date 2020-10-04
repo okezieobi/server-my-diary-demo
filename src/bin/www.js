@@ -10,6 +10,7 @@ import 'regenerator-runtime/runtime';
 import { createServer } from 'http';
 
 import app from '../app';
+import umzug from '../utils/umzug';
 
 const debug = require('debug')('server-my-diary-demo-v1:server');
 
@@ -110,6 +111,12 @@ const exitHandler = terminate(server, {
   coredump: false,
   timeout: 500,
 });
+
+(async () => {
+  // await umzug.migrations();
+  await umzug.migrations.up();
+  await umzug.seeders.up();
+})();
 
 /**
  * Listen on provided port, on all network interfaces.
