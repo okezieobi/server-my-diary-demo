@@ -13,7 +13,8 @@
     "build": "npm run clean && npm run build-app",
     "build-app": "babel src -s -d dist --presets=@babel/env",
     "start": "node dist/bin/www.js",
-    "test": "NODE_ENV=test jest tests/index.test.js '--detectOpenHandles'"
+    "test": "NODE_ENV=test jest tests/index.test.js",
+    "coverage": "npm run test --coverage && coveralls < coverage/lcov.info"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -42,6 +43,7 @@
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/register": "^7.11.5",
+    "coveralls": "^3.1.0",
     "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
