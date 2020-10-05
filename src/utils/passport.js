@@ -8,7 +8,7 @@ passport.use('signup', new LocalStrategy({
 }, async ({ body }, username, password, done) => {
   try {
     const user = await services.UserServices.findWithUnique(body);
-    if (user) done({ message: 'User already exists with either email or username, please sign in' });
+    if (user) done({ message: 'User already exists with either email or username, please sign in', status: 404 });
     else done(null, body);
   } catch (err) {
     done(err);

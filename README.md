@@ -1,9 +1,3 @@
-[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/Node.js%20CI/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/actions)
-
-[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/npm%20install,%20build,%20and%20test/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/actions)
-
-[![Actions Status](https://github.com/okezieobi/server-my-diary-demo}/workflows/Deploy%20to%20Azure%20WebApp/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/actions)
-
 [![Coverage Status](https://coveralls.io/repos/github/okezieobi/server-my-diary-demo/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/server-my-diary-demo?branch=main)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e2a36127ce3f408ab4428a57b7008534)](https://www.codacy.com/gh/okezieobi/server-my-diary-demo/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=okezieobi/server-my-diary-demo&amp;utm_campaign=Badge_Grade)
@@ -14,7 +8,7 @@
 REST API for MyDiary, an online journal where users can pen down their thoughts and feelings
 
 ## API docs
-https://diary-app-demo-v1.azurewebsites.net/api-docs
+https://diary-app-demo.herokuapp.com/api-docs
 
 ## Required Features
 - Users can send requests create an account and log in.
@@ -25,4 +19,4 @@ https://diary-app-demo-v1.azurewebsites.net/api-docs
 - Users send requests set and get daily notifications that prompt them to add an entry to their diary.
 
 ## Stack
-PERN
+ExpressJS/NodeJS, PostgreSQL/sequelize

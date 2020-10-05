@@ -5,7 +5,7 @@ import UserSchema from './user';
 const handleValidationErr = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) next();
-  else next(errors.array());
+  else next({ message: errors.array(), status: 400 });
 };
 
 export default {
