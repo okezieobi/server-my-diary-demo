@@ -8,7 +8,7 @@
 REST API for MyDiary, an online journal where users can pen down their thoughts and feelings
 
 ## API docs
-https://diary-app-demo.herokuapp.com/api-docs
+https://diary-app-demo-v1.azurewebsites.net/api-docs
 
 ## Required Features
 - Users can send requests create an account and log in.

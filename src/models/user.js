@@ -3,7 +3,7 @@ import { Model, DataTypes, Op } from 'sequelize';
 import bcryptUtil from '../utils/bcrypt';
 
 export default class User extends Model {
-  static async createOne(user, sequelize) {
+  static async createOne(user, { sequelize }) {
     return sequelize.transaction(async (t) => {
       await this.create(user, { transaction: t });
       return this.findOne({
@@ -14,13 +14,13 @@ export default class User extends Model {
         },
         transaction: t,
         attributes: {
-          exclude: ['password'],
+          exclude: ['password', 'updatedAt'],
         },
       });
     });
   }
 
-  static async findByUnique({ email, username }, sequelize) {
+  static async findByUnique({ email, username }, { sequelize }) {
     return sequelize.transaction(async (t) => this.findOne({
       where: {
         [Op.or]: [
@@ -31,7 +31,7 @@ export default class User extends Model {
     }));
   }
 
-  static async findById({ id }, sequelize) {
+  static async findById({ id }, { sequelize }) {
     return sequelize.transaction(async (t) => this.findByPk(id, { transaction: t }));
   }
 

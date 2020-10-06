@@ -14,5 +14,3 @@ before_script:
 - psql -c "CREATE ROLE personalprojects WITH LOGIN PASSWORD 'lovely' CREATEDB SUPERUSER;" -U postgres
 script:
 - npm run coverage
-after_script:
-- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
