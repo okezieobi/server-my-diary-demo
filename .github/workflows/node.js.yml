@@ -17,15 +17,6 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x, 12.x, 14.x]
-    services:
-        postgres:
-          image: postgres:10.8
-          env:
-            POSTGRES_USER: okezie
-            POSTGRES_PASSWORD: ${{ secretes.postgres_password }}
-            POSTGRES_DB: mydiarydev
-          ports:
-          - 5432:5432
 
     steps:
     - uses: actions/checkout@v2
@@ -35,5 +26,4 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm run coverage:codacy
     - npm run test
