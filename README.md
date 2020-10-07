@@ -1,3 +1,9 @@
+[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/Node.js%20CI/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/Node.js%20CI)
+
+[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/codacy-coverage-reporter/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/codacy-coverage-reporter)
+
+[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/Azure%20Deployment/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/Azure%20Deployment)
+
 [![Coverage Status](https://coveralls.io/repos/github/okezieobi/server-my-diary-demo/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/server-my-diary-demo?branch=main)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e2a36127ce3f408ab4428a57b7008534)](https://www.codacy.com/gh/okezieobi/server-my-diary-demo/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=okezieobi/server-my-diary-demo&amp;utm_campaign=Badge_Grade)
