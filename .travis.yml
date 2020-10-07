@@ -13,4 +13,4 @@ before_script:
 - psql -c 'DROP DATABASE IF EXISTS mydiarytest;' -U postgres
 - psql -c 'CREATE DATABASE mydiarytest;' -U postgres
 script:
-- npm run coverage
+- npm run coverage:coveralls
