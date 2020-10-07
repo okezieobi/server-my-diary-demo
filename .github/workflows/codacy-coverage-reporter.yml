@@ -1,4 +1,4 @@
-ame: codacy-coverage-reporter
+name: codacy-coverage-reporter
 
 on:
   push:
