@@ -27,6 +27,8 @@ jobs:
     - uses: harmon758/postgresql-action@v1
       with:
         postgresql version: '11'
+        postgresql db: 'test'
+        postgresql user: 'personalprojects'
     - run: npm ci
     - run: npm run build --if-present
     - run:  sudo service postgresql start
