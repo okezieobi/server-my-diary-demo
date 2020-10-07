@@ -29,6 +29,7 @@ jobs:
         postgresql version: '11'
         postgresql db: 'test'
         postgresql user: 'personalprojects'
+        postgresql password: 'lovely'
     - run: npm ci
     - run: npm run build --if-present
     - run:  sudo service postgresql start
