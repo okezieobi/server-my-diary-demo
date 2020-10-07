@@ -3,6 +3,10 @@
 
 name: Node.js CI
 
+env:
+  TEST_DATABASE_URL: ${{ env.TEST_DATABASE_URL }}    # set this to your application's name
+  JWT_SECRET: ${{ env.JWT_SECRET }}     
+
 on:
   push:
     branches: [ main ]
