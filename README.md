@@ -2,7 +2,7 @@
 
 [![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/codacy-coverage-reporter/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/codacy-coverage-reporter)
 
-[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/Azure%20Deployment/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/Azure%20Deployment)
+[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/Build%20and%20Deploy/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/Build%20and%20Deploy)
 
 [![Coverage Status](https://coveralls.io/repos/github/okezieobi/server-my-diary-demo/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/server-my-diary-demo?branch=main)
 
