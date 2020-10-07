@@ -4,12 +4,12 @@ node_js:
 services:
   - postgresql
 addons:
-  postgresql: "12"
+  postgresql: "9.5"
 cache:
   directories:
   - node_modules
 before_script:
-- npm ci
+- npm install
 - psql -c 'DROP DATABASE IF EXISTS mydiarytest;' -U postgres
 - psql -c 'CREATE DATABASE mydiarytest;' -U postgres
 script:
