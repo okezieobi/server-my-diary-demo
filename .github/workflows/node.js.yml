@@ -35,5 +35,5 @@ jobs:
     - run:  sudo service postgresql start
     - run: npm test
       env:
-        TEST_DATABASE_URL: 'postgres://personalprojects:lovely@localhost:5432/test'
+        TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
