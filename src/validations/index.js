@@ -1,4 +1,4 @@
-import { validationResult } from 'express-validator';
+import { validationResult, checkSchema } from 'express-validator';
 
 import UserSchema from './user';
 
@@ -8,6 +8,8 @@ const handleValidationErr = (req, res, next) => {
   else next({ message: errors.array(), status: 400 });
 };
 
+const userSchema = new UserSchema(checkSchema);
+
 export default {
-  signup: [UserSchema.validateSignup(), handleValidationErr],
+  signup: [userSchema.validateSignup, handleValidationErr],
 };

@@ -10,7 +10,7 @@
 
 [![Build Status](https://travis-ci.org/okezieobi/server-my-diary-demo.svg?branch=main)](https://travis-ci.org/okezieobi/server-my-diary-demo)
 
-# server-my-diary-demo-v1
+# server-my-diary-demo
 REST API for MyDiary, an online journal where users can pen down their thoughts and feelings
 
 ## Live API docs
