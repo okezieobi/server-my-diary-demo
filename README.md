@@ -1,8 +1,8 @@
-[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/Node.js%20CI/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/Node.js%20CI)
+![Node.js CI](https://github.com/okezieobi/server-my-diary-demo/workflows/Node.js%20CI/badge.svg)
 
-[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/codacy-coverage-reporter/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/codacy-coverage-reporter)
+![.github/workflows/azure.yml](https://github.com/okezieobi/server-my-diary-demo/workflows/.github/workflows/azure.yml/badge.svg)
 
-[![Actions Status](https://github.com/okezieobi/server-my-diary-demo/workflows/Build%20and%20Deploy/badge.svg)](https://github.com/okezieobi/server-my-diary-demo/Build%20and%20Deploy)
+![codacy-coverage-reporter](https://github.com/okezieobi/server-my-diary-demo/workflows/codacy-coverage-reporter/badge.svg)
 
 [![Coverage Status](https://coveralls.io/repos/github/okezieobi/server-my-diary-demo/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/server-my-diary-demo?branch=main)
 
@@ -13,7 +13,7 @@
 # server-my-diary-demo-v1
 REST API for MyDiary, an online journal where users can pen down their thoughts and feelings
 
-## API docs
+## Live API docs
 https://diary-app-demo-v1.azurewebsites.net/api-docs
 
 ## Required Features
