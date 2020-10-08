@@ -33,7 +33,8 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run:  sudo service postgresql start
-    - run: npm run coverage:codacy
+    - run: npm run coverage:coveralls
       env:
         TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  
