@@ -1,7 +1,21 @@
-# server-my-diary-demo-v1
+![Node.js CI](https://github.com/okezieobi/server-my-diary-demo/workflows/Node.js%20CI/badge.svg)
+
+![.github/workflows/azure.yml](https://github.com/okezieobi/server-my-diary-demo/workflows/.github/workflows/azure.yml/badge.svg)
+
+![codacy-coverage-reporter](https://github.com/okezieobi/server-my-diary-demo/workflows/codacy-coverage-reporter/badge.svg)
+
+![.github/workflows/azure-postgresql.yml](https://github.com/okezieobi/server-my-diary-demo/workflows/.github/workflows/azure-postgresql.yml/badge.svg)
+
+[![Coverage Status](https://coveralls.io/repos/github/okezieobi/server-my-diary-demo/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/server-my-diary-demo?branch=main)
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e2a36127ce3f408ab4428a57b7008534)](https://www.codacy.com/gh/okezieobi/server-my-diary-demo/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=okezieobi/server-my-diary-demo&amp;utm_campaign=Badge_Grade)
+
+[![Build Status](https://travis-ci.org/okezieobi/server-my-diary-demo.svg?branch=main)](https://travis-ci.org/okezieobi/server-my-diary-demo)
+
+# server-my-diary-demo
 REST API for MyDiary, an online journal where users can pen down their thoughts and feelings
 
-## API docs
+## Live API docs
 https://diary-app-demo-v1.azurewebsites.net/api-docs
 
 ## Required Features
@@ -13,4 +27,4 @@ https://diary-app-demo-v1.azurewebsites.net/api-docs
 - Users send requests set and get daily notifications that prompt them to add an entry to their diary.
 
 ## Stack
-PERN
+ExpressJS/NodeJS, PostgreSQL/sequelize

@@ -10,6 +10,7 @@ import 'regenerator-runtime/runtime';
 import { createServer } from 'http';
 
 import app from '../app';
+import umzug from '../utils/umzug';
 
 const debug = require('debug')('server-my-diary-demo-v1:server');
 
@@ -86,10 +87,44 @@ function onListening() {
   debug(`Listening on ${bind}`);
 }
 
+const terminate = (serverApp, options = { coredump: false, timeout: 500 }) => {
+  // Exit function
+  const exit = (code) => {
+    if (options.coredump) return process.abort();
+    return process.exit(code);
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  return (code, reason) => (err, promise) => {
+    if (err && err instanceof Error) {
+      // Log error information, use a proper logging library here :)
+      console.error(err.name, err.message, err.stack);
+    }
+
+    // Attempt a graceful shutdown
+    serverApp.close(exit);
+    setTimeout(exit, options.timeout).unref();
+  };
+};
+
+const exitHandler = terminate(server, {
+  coredump: false,
+  timeout: 500,
+});
+
+(async () => {
+  await umzug.migrations.up();
+})();
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port, () => console.log(`App is live on ${port}`));
+server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+process.on('uncaughtException', exitHandler(1, 'Unexpected Error'));
+process.on('unhandledRejection', exitHandler(1, 'Unhandled Promise'));
+process.on('SIGTERM', exitHandler(0, 'SIGTERM'));
+process.on('SIGINT', exitHandler(0, 'SIGINT'));

@@ -4,8 +4,7 @@ import logger from 'morgan';
 import cors from 'cors';
 import swaggerUI from 'swagger-ui-express';
 
-import indexRouter from './routes/index';
-import usersRouter from './routes/users';
+import routes from './routes/router';
 import swaggerSpec from './utils/swagger';
 
 const app = express();
@@ -17,7 +16,12 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/v1', routes);
+
+// eslint-disable-next-line no-unused-vars
+app.use((error, req, res, next) => {
+  if (error.status) res.status(error.status).json({ error });
+  else next(error);
+});
 
 export default app;
