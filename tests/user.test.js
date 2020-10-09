@@ -95,5 +95,6 @@ describe('User should be able to signup to the app', () => {
     const { status, body: { error } } = await request(app).post('/api/v1/auth/signup').send(utils.user.mock2);
     expect(status).toBeNumber().toEqual(406);
     expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error.message).toBeString().toEqual('User already exists with either email or username, please sign in');
   });
 });
