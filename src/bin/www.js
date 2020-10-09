@@ -113,10 +113,7 @@ const exitHandler = terminate(server, {
 });
 
 (async () => {
-  // await umzug migrations
-  //  await umzug.migrations.down();
   await umzug.migrations.up();
-  // await umzug.seeders.up();
 })();
 
 /**

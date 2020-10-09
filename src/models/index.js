@@ -18,7 +18,7 @@ Object.values(models)
 
 (async () => {
   await sequelize.authenticate();
-  await sequelize.sync();
+  // no sequelize.sync(); use umzug migrations after writing models
 })();
 
 export default {
