@@ -1,5 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import express, { json, urlencoded } from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
@@ -8,7 +6,6 @@ import swaggerUI from 'swagger-ui-express';
 
 import routes from './routes/router';
 import swaggerSpec from './utils/swagger';
-import umzug from './utils/umzug';
 
 const app = express();
 
@@ -26,9 +23,5 @@ app.use((error, req, res, next) => {
   if (error.status) res.status(error.status).json({ error });
   else next(error);
 });
-
-(async () => {
-  await umzug.migrations.up();
-})();
 
 export default app;
