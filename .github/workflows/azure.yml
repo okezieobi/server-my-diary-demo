@@ -19,6 +19,8 @@ on:
     branches: [ main ]
 
 env:
+  TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
   AZURE_WEBAPP_NAME: diary-app-demo    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '12.x'                # set this to the node version to use
@@ -34,12 +36,15 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
     - name: npm install, build, and test
-      run: |
-        # Build and test the project, then
-        # deploy to Azure Web App.
-        npm install
-        npm run build --if-present
-        npm run test --if-present
+    - uses: harmon758/postgresql-action@v1
+      with:
+        postgresql version: '11'
+        postgresql db: 'test'
+        postgresql user: 'personalprojects'
+        postgresql password: ${{ secrets.DB_PASSWORD }}
+    - run: npm ci
+    - run:  sudo service postgresql start
+    - run: npm run test
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
