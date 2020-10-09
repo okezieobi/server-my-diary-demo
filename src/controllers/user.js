@@ -6,7 +6,7 @@ export default class UserController {
     try {
       const user = await services.UserServices.create(body);
       const token = await jwt.generate(user);
-      res.status(201).send({ data: { token, user } });
+      res.status(201).send({ data: { token, user, status: 201 } });
     } catch (err) {
       next(err);
     }

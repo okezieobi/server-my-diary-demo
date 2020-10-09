@@ -1,14 +1,16 @@
 import bcrypt from '../utils/bcrypt';
 
-const hashedPassword = bcrypt.hashString('password one');
+import testUtils from '../../tests/utils';
+
+const hashedPassword = bcrypt.hashString(testUtils.user.mock2.password);
 
 async function up(queryInterface) {
   await queryInterface.bulkInsert('Users', [
     {
       id: '18ae5a5b-4c5f-410e-aef1-c0c800cf47f9',
-      fullName: 'Frank Okezie',
-      username: 'Obiedere',
-      email: 'foobar@mail.com',
+      fullName: testUtils.user.mock2.fullName,
+      username: testUtils.user.mock2.username,
+      email: testUtils.user.mock2.email,
       password: hashedPassword,
       type: 'Client',
       createdAt: new Date(),
