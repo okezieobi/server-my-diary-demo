@@ -10,4 +10,4 @@ jobs:
       with:
         connection-string: ${{ secrets.AZURE_POSTGRESQL_CONNECTION_STRING }}
         server-name: diary-app-demo-postgre.postgres.database.azure.com
-        plsql-file: "sql_files/*.sql"
+        plsql-file: "sql/*.sql"
