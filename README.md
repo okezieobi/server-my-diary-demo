@@ -18,10 +18,7 @@ REST API for MyDiary, an online journal where users can pen down their thoughts 
 ## client
 https://github.com/okezieobi/client-my-diary-demo
 
-## Live API docs deployment on Azure Webapp service
-https://diary-app-demo-v1.azurewebsites.net/api-docs
-
-## Live API docs deployment on Heroku
+## Live API docs
 https://diary-app-demo.herokuapp.com/api-docs
 
 
