@@ -1,10 +1,6 @@
 ![Node.js CI](https://github.com/okezieobi/server-my-diary-demo/workflows/Node.js%20CI/badge.svg)
 
-![.github/workflows/azure.yml](https://github.com/okezieobi/server-my-diary-demo/workflows/.github/workflows/azure.yml/badge.svg)
-
 ![codacy-coverage-reporter](https://github.com/okezieobi/server-my-diary-demo/workflows/codacy-coverage-reporter/badge.svg)
-
-![.github/workflows/azure-postgresql.yml](https://github.com/okezieobi/server-my-diary-demo/workflows/.github/workflows/azure-postgresql.yml/badge.svg)
 
 [![Coverage Status](https://coveralls.io/repos/github/okezieobi/server-my-diary-demo/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/server-my-diary-demo?branch=main)
 
@@ -15,8 +11,12 @@
 # server-my-diary-demo
 REST API for MyDiary, an online journal where users can pen down their thoughts and feelings
 
+## client
+https://github.com/okezieobi/client-my-diary-demo
+
 ## Live API docs
-https://diary-app-demo-v1.azurewebsites.net/api-docs
+https://diary-app-demo.herokuapp.com/api-docs
+
 
 ## Required Features
 - Users can send requests create an account and log in.

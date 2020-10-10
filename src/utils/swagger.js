@@ -8,7 +8,7 @@ const swaggerDefinition = {
     description: 'REST API for MyDiary is an online journal where users can pen down their thoughts and feelings', // short description of the app
   },
   servers: [
-    { url: 'https://diary-app-demo-v1.azurewebsites.net/api/v1', description: 'Deployed server' },
+    { url: 'https://diary-app-demo.herokuapp.com/api/v1', description: 'Deployed server on Heroku' },
     { url: 'http://localhost:3000/api/v1', description: 'Local development/testing server' },
   ],
   components: {

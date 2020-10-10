@@ -9,8 +9,8 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { createServer } from 'http';
 
-import app from '../app';
 import umzug from '../utils/umzug';
+import app from '../app';
 
 const debug = require('debug')('server-my-diary-demo-v1:server');
 

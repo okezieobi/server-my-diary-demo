@@ -1,10 +1,11 @@
 import { Umzug, SequelizeStorage } from 'umzug';
+import path from 'path';
 
 import models from '../models';
 
 const migrations = new Umzug({
   migrations: {
-    path: './src/migrations',
+    path: path.resolve(__dirname, '../migrations'),
     params: [
       models.sequelize.getQueryInterface(),
     ],
@@ -17,7 +18,7 @@ const migrations = new Umzug({
 
 const seeders = new Umzug({
   migrations: {
-    path: './src/seeders',
+    path: path.resolve(__dirname, '../seeders'),
     params: [
       models.sequelize.getQueryInterface(),
     ],
