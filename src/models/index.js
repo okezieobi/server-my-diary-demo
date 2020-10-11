@@ -6,7 +6,7 @@ import env from '../utils/env';
 const sequelize = new Sequelize(env.databaseURL, { ssl: true, dialect: 'postgres', logging: false });
 // pass your sequelize config here
 
-const models = { UserModel };
+const models = { user: UserModel };
 
 Object.values(models).forEach((model) => model.init(sequelize));
 

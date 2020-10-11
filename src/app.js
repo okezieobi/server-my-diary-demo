@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import swaggerUI from 'swagger-ui-express';
+import passport from 'passport';
 
 import routes from './routes/router';
 import swaggerSpec from './utils/swagger';
@@ -15,6 +16,7 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.use(passport.initialize());
 
 app.use('/api/v1', routes);
 

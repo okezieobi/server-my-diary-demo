@@ -12,4 +12,5 @@ const userSchema = new UserSchema(checkSchema);
 
 export default {
   signup: [userSchema.validateSignup, handleValidationErr],
+  login: [userSchema.validateLogin, handleValidationErr],
 };
