@@ -6,13 +6,9 @@ import jwt from '../utils/jwt';
 
 const router = Router();
 
-const handleResponse = ({ user: { user, status } }, res, next) => {
-  try {
-    const token = jwt.generate(user);
-    res.status(status).send({ data: { token, user, status } });
-  } catch (err) {
-    next(err);
-  }
+const handleResponse = ({ user: { user, status } }, res) => {
+  const token = jwt.generate(user);
+  res.status(status).send({ data: { token, user, status } });
 };
 
 router.post('/signup', [...[validations.signup], passport.authenticate('signup', { session: false })], handleResponse);
