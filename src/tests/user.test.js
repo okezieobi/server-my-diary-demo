@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import app from '../src/app';
+import app from '../app';
 import utils from './utils';
 
 describe('User should be able to signup to the app', () => {

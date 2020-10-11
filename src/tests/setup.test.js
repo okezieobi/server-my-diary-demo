@@ -1,8 +1,8 @@
 import 'jest-chain';
 import 'jest-extended';
 
-import umzug from '../src/utils/umzug';
-import models from '../src/models';
+import umzug from '../utils/umzug';
+import models from '../models';
 
 beforeAll(async () => {
   await umzug.migrations.down();

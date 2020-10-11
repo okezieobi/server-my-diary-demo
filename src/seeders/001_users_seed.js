@@ -1,6 +1,6 @@
 import bcrypt from '../utils/bcrypt';
 
-import testUtils from '../../tests/utils';
+import testUtils from '../tests/utils';
 
 const hashedPassword = bcrypt.hashString(testUtils.user.mock2.password);
 
