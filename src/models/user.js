@@ -18,7 +18,7 @@ export default class User extends Model {
     });
   }
 
-  static async findByUnique({ email, username }, transaction) {
+  static async findByUnique({ email, username }, transaction, exclude = []) {
     return this.findOne({
       where: {
         [Op.or]: [
@@ -26,6 +26,9 @@ export default class User extends Model {
         ],
       },
       transaction,
+      attributes: {
+        exclude,
+      },
     });
   }
 

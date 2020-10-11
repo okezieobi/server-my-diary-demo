@@ -18,11 +18,13 @@ export default class UserServices {
   static async auth(arg) {
     return models.sequelize.transaction(async (t) => {
       let data;
-      const user = await models.user.findByUnique({ email: arg.user, username: arg.user }, t);
-      if (user) {
-        const verifyPassword = await bcrypt.compareString(user.password, arg.password);
-        if (verifyPassword) data = { user, status: 200 };
-        else data = { message: 'Password provided does not match user', status: 400 };
+      const userExists = await models.user.findByUnique({ email: arg.user, username: arg.user }, t);
+      if (userExists) {
+        const verifyPassword = await bcrypt.compareString(userExists.password, arg.password);
+        if (verifyPassword) {
+          const user = await models.user.findByUnique({ email: arg.user, username: arg.user }, t, ['password']);
+          data = { user, status: 200 };
+        } else data = { message: 'Password provided does not match user', status: 400 };
       } else data = { message: 'User not found, please sign up by creating an account', status: 404 };
       return data;
     });

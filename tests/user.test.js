@@ -17,7 +17,7 @@ describe('User should be able to signup to the app', () => {
     expect(data.user.createdAt).toBeString();
   });
 
-  it('Should NOT create a User at "/api/v1/auth/signup" if username, fullName, email or password are invalid inputs', async () => {
+  it('Should NOT create a User at "/api/v1/auth/signup" if username, fullName, email or password fields are invalid', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/auth/signup');
     expect(status).toBeNumber().toEqual(400);
     expect(error).toBeObject().toContainKeys(['messages', 'status']);
@@ -96,5 +96,66 @@ describe('User should be able to signup to the app', () => {
     expect(status).toBeNumber().toEqual(406);
     expect(error).toBeObject().toContainKeys(['message', 'status']);
     expect(error.message).toBeString().toEqual('User already exists with either email or username, please sign in');
+  });
+});
+
+describe('User should be able to login to the app', () => {
+  it('Should be able login a User at "/api/v1/auth/login" user and password fields are valid', async () => {
+    const { status, body: { data } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.mock2.email, password: utils.user.mock2.password });
+    expect(status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['user', 'status', 'token']);
+    expect(data.token).toBeString();
+    expect(data.status).toBeNumber().toEqual(200);
+    expect(data.user.fullName).toBeString().toEqual(utils.user.mock2.fullName);
+    expect(data.user.username).toBeString().toEqual(utils.user.mock2.username);
+    expect(data.user.email).toBeString().toEqual(utils.user.mock2.email);
+    expect(data.user.type).toBeString().toEqual('Client');
+    expect(data.user.createdAt).toBeString();
+    expect(data.user.updatedAt).toBeString();
+  });
+
+  it('Should NOT create a User at "/api/v1/auth/signup" if user or password fields are invalid', async () => {
+    const { status, body: { error } } = await request(app).post('/api/v1/auth/login');
+    expect(status).toBeNumber().toEqual(400);
+    expect(error).toBeObject().toContainKeys(['messages', 'status']);
+    expect(error.messages).toBeArray().toIncludeAllMembers([
+      {
+        msg: 'Email or username should be at least 256 characters long',
+        param: 'user',
+        location: 'body',
+      },
+      {
+        msg: 'Email or username must be string data type',
+        param: 'user',
+        location: 'body',
+      },
+      {
+        msg: 'Email or username is required',
+        param: 'user',
+        location: 'body',
+      },
+      {
+        msg: 'Password should be at least 256 characters long',
+        param: 'password',
+        location: 'body',
+      },
+      {
+        msg: 'Password must be string data type',
+        param: 'password',
+        location: 'body',
+      },
+      {
+        msg: 'Password is required',
+        param: 'password',
+        location: 'body',
+      },
+    ]);
+  });
+
+  it('Should NOT login a User at "/api/v1/auth/login" if user is not registered', async () => {
+    const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.mock.email, password: utils.user.mock.password });
+    expect(status).toBeNumber().toEqual(404);
+    expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
   });
 });
