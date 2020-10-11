@@ -6,7 +6,7 @@ export default class Bcrypt {
     return bcrypt.hashSync(password, salt);
   }
 
-  static async compareString(hashedPassword = '', password = '') {
-    return bcrypt.compare(password, hashedPassword);
+  static compareString(hashedPassword = '', password = '') {
+    return bcrypt.compareSync(password, hashedPassword);
   }
 }

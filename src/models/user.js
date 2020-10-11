@@ -3,32 +3,33 @@ import { Model, DataTypes, Op } from 'sequelize';
 import bcryptUtil from '../utils/bcrypt';
 
 export default class User extends Model {
-  static async createOne(user, { sequelize }) {
-    return sequelize.transaction(async (t) => {
-      await this.create(user, { transaction: t });
-      return this.findOne({
-        where: {
-          [Op.and]: [
-            { email: user.email }, { username: user.username },
-          ],
-        },
-        transaction: t,
-        attributes: {
-          exclude: ['password', 'updatedAt'],
-        },
-      });
+  static async createOne(user, transaction) {
+    await this.create(user, { transaction });
+    return this.findOne({
+      where: {
+        [Op.and]: [
+          { email: user.email }, { username: user.username },
+        ],
+      },
+      transaction,
+      attributes: {
+        exclude: ['password', 'updatedAt'],
+      },
     });
   }
 
-  static async findByUnique({ email, username }, { sequelize }) {
-    return sequelize.transaction(async (t) => this.findOne({
+  static async findByUnique({ email, username }, transaction, exclude = []) {
+    return this.findOne({
       where: {
         [Op.or]: [
           { email }, { username },
         ],
       },
-      transaction: t,
-    }));
+      transaction,
+      attributes: {
+        exclude,
+      },
+    });
   }
 
   static async findById({ id }, { sequelize }) {

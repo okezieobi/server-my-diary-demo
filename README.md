@@ -17,7 +17,6 @@ https://github.com/okezieobi/client-my-diary-demo
 ## Live API docs
 https://diary-app-demo.herokuapp.com/api-docs
 
-
 ## Required Features
 - Users can send requests create an account and log in.
 - Users send requests view all entries to their diary.

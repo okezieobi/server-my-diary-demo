@@ -1,12 +1,18 @@
 import { Router } from 'express';
 
-import controllers from '../controllers';
 import validations from '../validations';
 import passport from '../utils/passport';
+import jwt from '../utils/jwt';
 
 const router = Router();
 
-router.post('/signup', [...[validations.signup],
-  passport.authenticate('signup', { session: false })], controllers.UserController.create);
+const handleResponse = ({ user: { user, status } }, res) => {
+  const token = jwt.generate(user);
+  res.status(status).send({ data: { token, user, status } });
+};
+
+router.post('/signup', [...[validations.signup], passport.authenticate('signup', { session: false })], handleResponse);
+
+router.post('/login', [...[validations.login], passport.authenticate('login', { session: false })], handleResponse);
 
 export default router;
