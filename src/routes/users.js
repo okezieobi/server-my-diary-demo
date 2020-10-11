@@ -6,11 +6,10 @@ import jwt from '../utils/jwt';
 
 const router = Router();
 
-const handleResponse = ({ user }, res, next) => {
+const handleResponse = ({ user: { user, status } }, res, next) => {
   try {
     const token = jwt.generate(user);
-    const data = { token, user: user.user, status: user.status };
-    res.status(user.status).send({ data });
+    res.status(status).send({ data: { token, user, status } });
   } catch (err) {
     next(err);
   }
