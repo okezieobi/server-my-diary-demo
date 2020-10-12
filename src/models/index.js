@@ -18,6 +18,9 @@ Object.values(models)
 
 (async () => {
   await sequelize.authenticate();
+  if (process.env.NODE_ENV !== 'test') {
+    await sequelize.sync({ force: true });
+  }
   // no sequelize.sync(); use umzug migrations after writing models
 })();
 
