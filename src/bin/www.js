@@ -112,11 +112,13 @@ const exitHandler = terminate(server, {
   timeout: 500,
 });
 
-(async () => {
+if (process.env.NODE_ENV === 'production') {
+  (async () => {
   // await umzug.migrations.down();
-  await umzug.migrations.up();
+    await umzug.migrations.up();
   // await umzug.seeders.up();
-})();
+  })();
+}
 
 /**
  * Listen on provided port, on all network interfaces.
