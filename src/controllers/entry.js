@@ -1,14 +1,14 @@
 export default class EntryController {
   constructor(services) {
-    this.services = services;
+    this.services = services.entry;
   }
 
   async createOne({ body }, res, next) {
     try {
-      const entry = await this.services.entry.createOne(body);
-      if (entry.message) next(entry);
+      const data = await this.services.createOne(body);
+      if (data.message) next(data);
       else {
-        res.locals.entry = entry;
+        res.locals.entry = data;
         next();
       }
     } catch (err) {
