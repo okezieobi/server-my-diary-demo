@@ -32,8 +32,8 @@ export default class User extends Model {
     });
   }
 
-  static async findById({ id }, { sequelize }) {
-    return sequelize.transaction(async (t) => this.findByPk(id, { transaction: t }));
+  static async findById(id, transaction) {
+    return this.findByPk(id, { transaction });
   }
 
   static associate(models) {

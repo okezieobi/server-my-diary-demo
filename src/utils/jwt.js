@@ -10,4 +10,8 @@ export default class JWT {
       expiresIn: 24 * 60 * 60,
     });
   }
+
+  static verify({ token }) {
+    return jwt.sign(token, env.JwtSecret);
+  }
 }

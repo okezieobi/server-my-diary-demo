@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import userRoute from './users';
+import userRoutes from './users';
 
 const router = Router();
 
 /* GET users listing. */
-router.use('/auth', userRoute);
+router.use('/auth', userRoutes(Router));
 
 export default router;

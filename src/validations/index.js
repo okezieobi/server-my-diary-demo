@@ -1,6 +1,8 @@
-import { validationResult, checkSchema } from 'express-validator';
+import { validationResult, checkSchema, header } from 'express-validator';
 
 import UserSchema from './user';
+
+const validateUserId = header('userId').isUUID();
 
 const handleValidationErr = (req, res, next) => {
   const errors = validationResult(req);
@@ -13,4 +15,5 @@ const userSchema = new UserSchema(checkSchema);
 export default {
   signup: [userSchema.validateSignup, handleValidationErr],
   login: [userSchema.validateLogin, handleValidationErr],
+  jwt: [userSchema.validateJWT, handleValidationErr, validateUserId, handleValidationErr],
 };

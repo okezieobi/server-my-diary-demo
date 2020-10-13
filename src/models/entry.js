@@ -1,6 +1,19 @@
 import { Model, DataTypes } from 'sequelize';
 
 export default class Entry extends Model {
+  static async createOne(entry, transaction) {
+    return this.create(entry, { transaction });
+  }
+
+  static async findAllByOwnerId(id, transaction) {
+    return this.findAll({
+      where: {
+        userId: id,
+      },
+      transaction,
+    });
+  }
+
   static associate(models) {
     this.belongsToUser = this.belongsTo(models.user, {
       onDelete: 'CASCADE',

@@ -92,5 +92,21 @@ export default class UserSchemas {
         },
       },
     });
+
+    this.validateJWT = checkSchema({
+      token: {
+        in: ['header'],
+        isString: {
+          errorMessage: 'Token must be string data type',
+        },
+        exists: {
+          errorMessage: 'Token is required',
+          options: { checkFalsy: true },
+        },
+        isJWT: {
+          errorMessage: 'Token is not in Json Web Token format',
+        },
+      },
+    });
   }
 }
