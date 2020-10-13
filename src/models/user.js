@@ -36,9 +36,8 @@ export default class User extends Model {
     return sequelize.transaction(async (t) => this.findByPk(id, { transaction: t }));
   }
 
-  /*
   static associate(models) {
-    this.hasManyEntries = this.hasMany(models.Entry, {
+    this.hasManyEntries = this.hasMany(models.entry, {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
       foreignKey: {
@@ -46,7 +45,6 @@ export default class User extends Model {
       },
     });
   }
-  */
 
   static init(sequelize) {
     return super.init(

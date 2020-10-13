@@ -2,7 +2,7 @@ import { Model, DataTypes } from 'sequelize';
 
 export default class Entry extends Model {
   static associate(models) {
-    this.belongsToManyUsers = this.belongsTo(models.User, {
+    this.belongsToUser = this.belongsTo(models.user, {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
       foreignKey: {
