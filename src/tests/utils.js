@@ -13,4 +13,10 @@ export default {
       password: 'password one',
     },
   },
+  entry: {
+    mock: {
+      title: 'Test title',
+      body: 'Test body',
+    },
+  },
 };
