@@ -1,4 +1,5 @@
 import controllers from '../controllers';
+import validations from '../validations';
 
 const handleResponse = (req, res) => {
   res.status(res.locals.data.status).send({ data: res.locals.data });
@@ -6,7 +7,8 @@ const handleResponse = (req, res) => {
 
 export default (Router) => {
   const router = Router();
-  router.post('/', controllers.entry.createOne, handleResponse);
+  router.route('/')
+    .post([...[validations.entry.create], controllers.entry.createOne], handleResponse);
 
   return router;
 };

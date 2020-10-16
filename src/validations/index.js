@@ -1,9 +1,7 @@
-import { validationResult, checkSchema, header } from 'express-validator';
+import { validationResult, checkSchema } from 'express-validator';
 
 import UserSchema from './user';
-import jwt from '../utils/jwt';
-
-const validateUserId = header('userId').isUUID();
+import EntrySchema from './entry';
 
 const handleValidationErr = (req, res, next) => {
   const errors = validationResult(req);
@@ -11,20 +9,16 @@ const handleValidationErr = (req, res, next) => {
   else next({ messages: errors.array(), status: 400 });
 };
 
-const verifyToken = ({ headers }, res, next) => {
-  try {
-    const { userId } = jwt.verify(headers);
-    res.set('userId', userId);
-  } catch (err) {
-    next(err);
-  }
-};
-
 const userSchema = new UserSchema(checkSchema);
+const entrySchema = new EntrySchema(checkSchema);
 
 export default {
-  signup: [userSchema.validateSignup, handleValidationErr],
-  login: [userSchema.validateLogin, handleValidationErr],
-  jwt: [userSchema.validateJWT, handleValidationErr,
-    verifyToken, validateUserId, handleValidationErr],
+  user: {
+    signup: [userSchema.validateSignup, handleValidationErr],
+    login: [userSchema.validateLogin, handleValidationErr],
+    jwt: [userSchema.validateJWT, handleValidationErr],
+  },
+  entry: {
+    create: [entrySchema.validateCreateEntry, handleValidationErr],
+  },
 };

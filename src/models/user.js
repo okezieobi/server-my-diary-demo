@@ -33,7 +33,12 @@ export default class User extends Model {
   }
 
   static async findById(id, transaction) {
-    return this.findByPk(id, { transaction });
+    return this.findByPk(id, {
+      transaction,
+      attributes: {
+        exclude: ['password'],
+      },
+    });
   }
 
   static associate(models) {

@@ -95,7 +95,7 @@ export default class UserSchemas {
 
     this.validateJWT = checkSchema({
       token: {
-        in: ['header'],
+        in: ['headers'],
         isString: {
           errorMessage: 'Token must be string data type',
         },
@@ -104,7 +104,7 @@ export default class UserSchemas {
           options: { checkFalsy: true },
         },
         isJWT: {
-          errorMessage: 'Token is not in Json Web Token format',
+          errorMessage: 'Token does not match Json Web Token format',
         },
       },
     });

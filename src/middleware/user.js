@@ -1,14 +1,20 @@
+import jwt from '../utils/jwt';
+
 export default class UserMiddleWare {
   constructor(services) {
     this.services = services.user;
     this.findById = this.findById.bind(this);
   }
 
-  async findById({ headers: { userId } }, res, next) {
+  async findById({ headers }, res, next) {
     try {
-      const user = await this.services.findById(userId);
+      const { id } = jwt.verify(headers);
+      const user = await this.services.authJWT(id);
       if (user.message) next(user);
-      else next();
+      else {
+        res.locals.id = id;
+        next();
+      }
     } catch (err) {
       next(err);
     }
