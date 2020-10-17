@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Umzug from 'umzug';
 import path from 'path';
 
@@ -40,5 +41,24 @@ const seeders = new Umzug({
 });
 
 export default {
-  migrations, seeders,
+  migrations: {
+    up: async () => {
+      await migrations.up(['00-user-migrate.js', '00-entry-migrate.js']);
+      console.log('Migrations successful');
+    },
+    down: async () => {
+      await migrations.down(['00-entry-migrate.js', '00-user-migrate.js']);
+      console.log('Migrations successfully undone');
+    },
+  },
+  seeders: {
+    up: async () => {
+      await seeders.up(['00-user-seed.js', '00-entry-seed.js']);
+      console.log('Seeding successful');
+    },
+    down: async () => {
+      await seeders.down(['00-entry-seed.js', '00-user-seed.js']);
+      console.log('Seeding successfully undone');
+    },
+  },
 };

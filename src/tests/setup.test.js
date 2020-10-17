@@ -5,18 +5,18 @@ import umzug from '../utils/umzug';
 import models from '../models';
 
 beforeAll(async () => {
-  await umzug.migrations.up(['00-user-migrate.js', '00-entry-migrate.js']);
+  await umzug.migrations.up();
 });
 
 beforeEach(async () => {
-  await umzug.seeders.up(['00-user-seed.js', '00-entry-seed.js']);
+  await umzug.seeders.up();
 });
 
 afterEach(async () => {
-  await umzug.seeders.down(['00-entry-seed.js', '00-user-seed.js']);
+  await umzug.seeders.down();
 });
 
 afterAll(async () => {
-  await umzug.migrations.down(['00-entry-migrate.js', '00-user-migrate.js']);
+  await umzug.migrations.down();
   await models.sequelize.close();
 });
