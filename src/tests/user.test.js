@@ -158,4 +158,11 @@ describe('User should be able to login to the app', () => {
     expect(error).toBeObject().toContainKeys(['message', 'status']);
     expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
   });
+
+  it('Should NOT login a User at "/api/v1/auth/login" if password is wrong', async () => {
+    const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.mock2.email, password: 'wrong password' });
+    expect(status).toBeNumber().toEqual(401);
+    expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error.message).toBeString().toEqual('Password provided does not match user');
+  });
 });

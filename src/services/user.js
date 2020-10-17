@@ -29,7 +29,7 @@ export default class UserServices {
         if (verifyPassword) {
           const user = await this.models.user.findByUnique({ email: arg.user, username: arg.user }, t, ['password']);
           data = { user, status: 200 };
-        } else data = { message: 'Password provided does not match user', status: 400 };
+        } else data = { message: 'Password provided does not match user', status: 401 };
       } else data = { message: 'User not found, please sign up by creating an account', status: 404 };
       return data;
     });
@@ -40,7 +40,7 @@ export default class UserServices {
       let data;
       const user = await this.models.user.findById(arg, t);
       if (user) data = { user, status: 200 };
-      else data = { message: 'User not found, please sign up by creating an account', status: 404 };
+      else data = { message: 'User not found, please sign up by creating an account', status: 401 };
       return data;
     });
   }

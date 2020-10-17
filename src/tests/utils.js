@@ -4,6 +4,7 @@ import jwt from '../utils/jwt';
 const id = '18ae5a5b-4c5f-410e-aef1-c0c800cf47f9';
 const hashedPassword = bcrypt.hashString('password one');
 const token = jwt.generate({ id });
+const token401 = jwt.generate({ id: '18ae5a5b-4c5f-410e-aef1-c0c800cf47f6' });
 
 export default {
   user: {
@@ -21,6 +22,7 @@ export default {
       email: 'okezie@email.com',
       password: 'password one',
       hashedPassword,
+      token401,
     },
   },
   entry: {

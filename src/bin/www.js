@@ -115,7 +115,7 @@ const exitHandler = terminate(server, {
 if (process.env.NODE_ENV === 'production') {
   (async () => {
   // await umzug.migrations.down();
-    await umzug.migrations.up();
+    await umzug.migrations.up(['00-user-migrate.js', '00-entry-migrate.js']);
   // await umzug.seeders.up();
   })();
 }
