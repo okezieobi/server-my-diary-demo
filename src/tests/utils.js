@@ -24,6 +24,12 @@ export default {
       hashedPassword,
       token401,
     },
+    mock3: {
+      fullName: 'test-fullName-2',
+      username: 'test-username-okezie',
+      email: 'frank@email.com',
+      password: 'test-password',
+    },
   },
   entry: {
     mock: {

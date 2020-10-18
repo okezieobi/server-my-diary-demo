@@ -1,0 +1,11 @@
+require("@babel/register");
+require('dotenv').config();
+
+const path = require('path');
+const envFolder = process.env.NODE_ENV === 'test' ? 'src' : 'dist'
+
+module.exports = {
+  'url': process.env.TEST_DATABASE_URL,
+  'seeders-path': path.resolve(`${envFolder}/seeders`),
+  'migrations-path': path.resolve(`${envFolder}/migrations`)
+}

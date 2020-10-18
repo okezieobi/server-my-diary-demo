@@ -9,7 +9,6 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { createServer } from 'http';
 
-import umzug from '../utils/umzug';
 import app from '../app';
 
 const debug = require('debug')('server-my-diary-demo-v1:server');
@@ -111,14 +110,6 @@ const exitHandler = terminate(server, {
   coredump: false,
   timeout: 500,
 });
-
-if (process.env.NODE_ENV === 'production') {
-  (async () => {
-  // await umzug.migrations.down();
-    await umzug.migrations.up(['00-user-migrate.js', '00-entry-migrate.js']);
-  // await umzug.seeders.up();
-  })();
-}
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -153,7 +153,7 @@ describe('User should be able to login to the app', () => {
   });
 
   it('Should NOT login a User at "/api/v1/auth/login" if user is not registered', async () => {
-    const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.mock.email, password: utils.user.mock.password });
+    const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.mock3.email, password: utils.user.mock3.password });
     expect(status).toBeNumber().toEqual(404);
     expect(error).toBeObject().toContainKeys(['message', 'status']);
     expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
