@@ -8,7 +8,8 @@ const handleResponse = (req, res) => {
 export default (Router) => {
   const router = Router();
   router.route('/')
-    .post([...[validations.entry.create], controllers.entry.createOne], handleResponse);
+    .post([...[validations.entry.create], controllers.entry.createOne], handleResponse)
+    .get([controllers.entry.findAll], handleResponse);
 
   return router;
 };
