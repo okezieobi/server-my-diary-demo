@@ -10,10 +10,12 @@ export default class EntryServices {
     });
   }
 
+  /*
   async findByOwner(arg) {
     return this.models.sequelize.transaction(async (t) => {
       const entry = await this.models.entry.findByOwnerId(arg, t);
       return { entry, status: 200 };
     });
   }
+  */
 }
