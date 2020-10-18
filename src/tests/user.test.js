@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import app from '../src/app';
+import app from '../app';
 import utils from './utils';
 
 describe('User should be able to signup to the app', () => {
@@ -24,7 +24,7 @@ describe('User should be able to signup to the app', () => {
     expect(error.status).toBeNumber().toEqual(400);
     expect(error.messages).toBeArray().toIncludeAllMembers([
       {
-        msg: 'Username should be at least 256 characters long',
+        msg: 'Username should be at most 256 characters long',
         param: 'username',
         location: 'body',
       },
@@ -39,7 +39,7 @@ describe('User should be able to signup to the app', () => {
         location: 'body',
       },
       {
-        msg: 'Full name should be at least 256 characters long',
+        msg: 'Full name should be at most 256 characters long',
         param: 'fullName',
         location: 'body',
       },
@@ -54,7 +54,7 @@ describe('User should be able to signup to the app', () => {
         location: 'body',
       },
       {
-        msg: 'Email should be at least 256 characters long',
+        msg: 'Email should be at most 256 characters long',
         param: 'email',
         location: 'body',
       },
@@ -74,7 +74,7 @@ describe('User should be able to signup to the app', () => {
         location: 'body',
       },
       {
-        msg: 'Password should be at least 256 characters long',
+        msg: 'Password should be at least 1 character long',
         param: 'password',
         location: 'body',
       },
@@ -120,7 +120,7 @@ describe('User should be able to login to the app', () => {
     expect(error).toBeObject().toContainKeys(['messages', 'status']);
     expect(error.messages).toBeArray().toIncludeAllMembers([
       {
-        msg: 'Email or username should be at least 256 characters long',
+        msg: 'Email or username should be at most 256 characters long',
         param: 'user',
         location: 'body',
       },
@@ -135,7 +135,7 @@ describe('User should be able to login to the app', () => {
         location: 'body',
       },
       {
-        msg: 'Password should be at least 256 characters long',
+        msg: 'Password should be at least 1 character long',
         param: 'password',
         location: 'body',
       },
@@ -153,9 +153,16 @@ describe('User should be able to login to the app', () => {
   });
 
   it('Should NOT login a User at "/api/v1/auth/login" if user is not registered', async () => {
-    const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.mock.email, password: utils.user.mock.password });
+    const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.mock3.email, password: utils.user.mock3.password });
     expect(status).toBeNumber().toEqual(404);
     expect(error).toBeObject().toContainKeys(['message', 'status']);
     expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
+  });
+
+  it('Should NOT login a User at "/api/v1/auth/login" if password is wrong', async () => {
+    const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.mock2.email, password: 'wrong password' });
+    expect(status).toBeNumber().toEqual(401);
+    expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error.message).toBeString().toEqual('Password provided does not match user');
   });
 });

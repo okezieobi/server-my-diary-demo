@@ -1,0 +1,56 @@
+import { Model, DataTypes } from 'sequelize';
+
+export default class Entry extends Model {
+  static async createOne({ title, body, id }, transaction) {
+    return this.create({
+      title,
+      body,
+      UserId: id,
+    }, {
+      transaction,
+    });
+  }
+
+  static async findAllByOwnerId(id, transaction) {
+    return this.findAll({
+      where: {
+        UserId: id,
+      },
+      transaction,
+    });
+  }
+
+  static associate(models) {
+    this.belongsToUser = this.belongsTo(models.user, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  }
+
+  static init(sequelize) {
+    return super.init({
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      title: {
+        type: DataTypes.STRING(256),
+        allowNull: false,
+        notEmpty: true,
+      },
+      body: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        notEmpty: true,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Entry',
+    });
+  }
+}

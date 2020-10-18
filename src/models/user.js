@@ -32,8 +32,23 @@ export default class User extends Model {
     });
   }
 
-  static async findById({ id }, { sequelize }) {
-    return sequelize.transaction(async (t) => this.findByPk(id, { transaction: t }));
+  static async findById(id, transaction) {
+    return this.findByPk(id, {
+      transaction,
+      attributes: {
+        exclude: ['password'],
+      },
+    });
+  }
+
+  static associate(models) {
+    this.hasManyEntries = this.hasMany(models.entry, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
   }
 
   static init(sequelize) {

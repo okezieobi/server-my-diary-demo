@@ -7,16 +7,26 @@
     "test": "tests"
   },
   "scripts": {
-    "dev": " DEBUG=server-my-diary-demo-v1:* nodemon --exec babel-node src/bin/www.js",
+    "dev": "DEBUG=server-my-diary-demo-v1:* nodemon --exec babel-node src/bin/www.js",
     "release": "npm run clean && npm run build-app && npm run start",
     "clean": "rm -rf dist && mkdir dist",
-    "build": "npm run clean && npm run build-app",
+    "build": "npm run clean && npm run build-app && npm run migrate",
     "build-app": "babel src -s -d dist --presets=@babel/env",
     "start": "node dist/bin/www.js",
-    "test": "NODE_ENV=test jest tests/index.test.js",
+    "test": "NODE_ENV=test jest src/tests/index.test.js",
     "coverage": "npm run test -- '--coverage'",
     "coverage:coveralls": "npm run coverage && coveralls < coverage/lcov.info",
-    "coverage:codacy": "npm run coverage && cp -R coverage .github/workflows/coverage/"
+    "coverage:codacy": "npm run coverage && cp -R coverage .github/workflows/coverage/",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo:all",
+    "seed-db": "npx sequelize-cli db:seed:all",
+    "seed-db:undo": "npx sequelize-cli db:seed:undo:all",
+    "pretest": "NODE_ENV=test npm run migrate && NODE_ENV=test npm run seed-db",
+    "posttest": "NODE_ENV=test npm run seed-db:undo && NODE_ENV=test npm run migrate:undo",
+    "migration-skeleton:user": "NODE_ENV=test npx sequelize-cli migration:generate --name User",
+    "migration-skeleton:entry": "NODE_ENV=test npx sequelize-cli migration:generate --name Entry",
+    "seed-skeleton:user": "NODE_ENV=test npx sequelize-cli seed:generate --name User",
+    "seed-skeleton:entry": "NODE_ENV=test npx sequelize-cli seed:generate --name Entry"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -29,15 +39,12 @@
     "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.1",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
     "regenerator-runtime": "^0.13.7",
     "sequelize": "^6.3.5",
     "swagger-jsdoc": "^4.0.0",
-    "swagger-ui-express": "^4.1.4",
-    "umzug": "^3.0.0-beta.5"
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -53,6 +60,7 @@
     "jest-chain": "^1.1.5",
     "jest-extended": "^0.11.5",
     "nodemon": "^2.0.4",
+    "sequelize-cli": "^6.2.0",
     "superagent": "^6.1.0",
     "supertest": "^4.0.2"
   }

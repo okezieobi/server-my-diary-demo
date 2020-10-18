@@ -4,7 +4,7 @@ export default class UserSchemas {
       user: {
         in: ['body'],
         isLength: {
-          errorMessage: 'Email or username should be at least 256 characters long',
+          errorMessage: 'Email or username should be at most 256 characters long',
           options: { min: 1, max: 256 },
         },
         isString: {
@@ -18,8 +18,8 @@ export default class UserSchemas {
       password: {
         in: ['body'],
         isLength: {
-          errorMessage: 'Password should be at least 256 characters long',
-          options: { min: 1, max: 256 },
+          errorMessage: 'Password should be at least 1 character long',
+          options: { min: 1 },
         },
         isString: {
           errorMessage: 'Password must be string data type',
@@ -35,7 +35,7 @@ export default class UserSchemas {
       username: {
         in: ['body'],
         isLength: {
-          errorMessage: 'Username should be at least 256 characters long',
+          errorMessage: 'Username should be at most 256 characters long',
           options: { min: 1, max: 256 },
         },
         isString: {
@@ -49,7 +49,7 @@ export default class UserSchemas {
       fullName: {
         in: ['body'],
         isLength: {
-          errorMessage: 'Full name should be at least 256 characters long',
+          errorMessage: 'Full name should be at most 256 characters long',
           options: { min: 1, max: 256 },
         },
         isString: {
@@ -63,7 +63,7 @@ export default class UserSchemas {
       email: {
         in: ['body'],
         isLength: {
-          errorMessage: 'Email should be at least 256 characters long',
+          errorMessage: 'Email should be at most 256 characters long',
           options: { min: 1, max: 256 },
         },
         isString: {
@@ -80,7 +80,7 @@ export default class UserSchemas {
       password: {
         in: ['body'],
         isLength: {
-          errorMessage: 'Password should be at least 256 characters long',
+          errorMessage: 'Password should be at least 1 character long',
           options: { min: 1, max: 256 },
         },
         isString: {
@@ -89,6 +89,22 @@ export default class UserSchemas {
         exists: {
           errorMessage: 'Password is required',
           options: { checkFalsy: true },
+        },
+      },
+    });
+
+    this.validateJWT = checkSchema({
+      token: {
+        in: ['headers'],
+        isString: {
+          errorMessage: 'Token must be string data type',
+        },
+        exists: {
+          errorMessage: 'Token is required',
+          options: { checkFalsy: true },
+        },
+        isJWT: {
+          errorMessage: 'Token does not match Json Web Token format',
         },
       },
     });
