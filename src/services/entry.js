@@ -12,11 +12,8 @@ export default class EntryServices {
 
   async findByOwner(arg) {
     return this.models.sequelize.transaction(async (t) => {
-      const entry = await this.models.entry.findAllByOwnerId(arg, t);
-      let data;
-      if (entry.length > 0) data = { entry, status: 200 };
-      else data = { entry: 'No entry found', status: 200 };
-      return data;
+      const entries = await this.models.entry.findAllByOwnerId(arg, t);
+      return { entries, status: 200 };
     });
   }
 }

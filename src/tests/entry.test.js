@@ -3,8 +3,8 @@ import request from 'supertest';
 import app from '../app';
 import utils from './utils';
 
-describe('Authenticated User should be able to create, read, update and update an entry at', () => {
-  it('Should be able to create a diary entry at "/api/v1/entries" if input fields are valid', async () => {
+describe('Authenticated User should be able to create an entry', () => {
+  it('Should be able to create a diary entry at "/api/v1/entries" if all required input fields are valid', async () => {
     const { status, body: { data } } = await request(app).post('/api/v1/entries')
       .set('token', utils.user.mock2.token).send(utils.entry.mock);
     expect(status).toBeNumber().toEqual(201);
@@ -79,6 +79,47 @@ describe('Authenticated User should be able to create, read, update and update a
   it('Should NOT create an entry at at "/api/v1/entries" if User is not authenticated', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/entries')
       .set('token', utils.user.mock2.token401).send(utils.entry.mock);
+    expect(status).toBeNumber().toEqual(401);
+    expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
+  });
+});
+
+describe('Authenticated User should be able to get all associated entries', () => {
+  it('Should get all associated entries at "/api/v1/entries" if input all required fields are valid', async () => {
+    const { status, body: { data } } = await request(app).get('/api/v1/entries')
+      .set('token', utils.user.mock2.token);
+    expect(status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['entries', 'status']);
+    expect(data.status).toBeNumber().toEqual(200);
+    expect(data.entries).toBeArray();
+  });
+
+  it('Should not get associated entries at "/api/v1/entries" if token is falsy', async () => {
+    const { status, body: { error } } = await request(app).get('/api/v1/entries');
+    expect(status).toBeNumber().toEqual(400);
+    expect(error.messages).toBeArray().toIncludeAllMembers([
+      {
+        msg: 'Token must be string data type',
+        param: 'token',
+        location: 'headers',
+      },
+      {
+        msg: 'Token does not match Json Web Token format',
+        param: 'token',
+        location: 'headers',
+      },
+      {
+        msg: 'Token is required',
+        param: 'token',
+        location: 'headers',
+      },
+    ]);
+  });
+
+  it('Should NOT get all associated entries at at "/api/v1/entries" if User is not authenticated', async () => {
+    const { status, body: { error } } = await request(app).get('/api/v1/entries')
+      .set('token', utils.user.mock2.token401);
     expect(status).toBeNumber().toEqual(401);
     expect(error).toBeObject().toContainKeys(['message', 'status']);
     expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
