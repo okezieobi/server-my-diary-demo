@@ -13,8 +13,9 @@ export default (Router) => {
     .post([...[validations.entry.create], controllers.entry.createOne], handleResponse)
     .get([controllers.entry.findAll], handleResponse);
 
+  router.use('/:id', [...[validations.entry.id], middleware.entry.findOneById]);
   router.route('/:id')
-    .get([...[validations.entry.id], middleware.entry.findOneById], handleResponse);
+    .get(handleResponse);
 
   return router;
 };
