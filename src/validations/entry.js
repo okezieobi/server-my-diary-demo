@@ -30,5 +30,14 @@ export default class EntrySchema {
         },
       },
     });
+
+    this.validateEntryId = checkSchema({
+      id: {
+        in: ['params'],
+        isUUID: {
+          errorMessage: 'Entry id does not match UUID format',
+        },
+      },
+    });
   }
 }

@@ -9,8 +9,7 @@ const router = Router();
 const [validate, handleError] = validations.user.jwt;
 
 router.use('/auth', userRoutes(Router));
-router.use(validate, handleError);
-router.use(middleware.user.findById);
+router.use(validate, handleError, middleware.user.findById);
 router.use('/entries', entryRoutes(Router));
 
 export default router;
