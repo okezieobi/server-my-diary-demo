@@ -20,5 +20,6 @@ export default {
   },
   entry: {
     create: [entrySchema.validateCreateEntry, handleValidationErr],
+    id: [entrySchema.validateEntryId, handleValidationErr],
   },
 };

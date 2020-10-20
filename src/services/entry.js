@@ -16,4 +16,14 @@ export default class EntryServices {
       return { entries, status: 200 };
     });
   }
+
+  async findOneByOwner(arg) {
+    return this.models.sequelize.transaction(async (t) => {
+      let data;
+      const entry = await this.models.entry.findOneByOwnerId(arg, t);
+      if (entry) data = { entry, status: 200 };
+      else data = { message: 'Entry not found', status: 404 };
+      return data;
+    });
+  }
 }

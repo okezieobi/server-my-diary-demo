@@ -8,4 +8,4 @@ paths:
        - ApiKeyAuth: []
       responses:          # server responses
         200:
-          description: An object with entry details
+          description: An object with an array entries

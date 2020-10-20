@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, Op } from 'sequelize';
 
 export default class Entry extends Model {
   static async createOne({ title, body, id }, transaction) {
@@ -15,6 +15,17 @@ export default class Entry extends Model {
     return this.findAll({
       where: {
         UserId: id,
+      },
+      transaction,
+    });
+  }
+
+  static async findOneByOwnerId({ UserId, id }, transaction) {
+    return this.findOne({
+      where: {
+        [Op.and]: [
+          { UserId }, { id },
+        ],
       },
       transaction,
     });
