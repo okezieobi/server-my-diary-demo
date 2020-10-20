@@ -173,4 +173,12 @@ describe('Authenticated User can get an associated, specific entry by its id', (
     expect(error).toBeObject().toContainKeys(['message', 'status']);
     expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
   });
+
+  it('Should NOT get associated, specific entries at at "/api/v1/entries/:id" if User is not authenticated', async () => {
+    const { status, body: { error } } = await request(app).get(`/api/v1/entries/${utils.entry.mock.id404}`)
+      .set('token', utils.user.mock2.token);
+    expect(status).toBeNumber().toEqual(404);
+    expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error.message).toBeString().toEqual('Entry not found');
+  });
 });
