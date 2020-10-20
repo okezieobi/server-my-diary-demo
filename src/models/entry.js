@@ -11,6 +11,19 @@ export default class Entry extends Model {
     });
   }
 
+  static async updateOne({
+    title = '', body = '', UserId, id,
+  }, transaction) {
+    return this.update({ title, body }, {
+      where: {
+        [Op.and]: [
+          { UserId }, { id },
+        ],
+      },
+      transaction,
+    });
+  }
+
   static async findAllByOwnerId(id, transaction) {
     return this.findAll({
       where: {

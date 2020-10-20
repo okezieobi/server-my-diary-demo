@@ -7,7 +7,7 @@ export default class EntryController {
 
   async createOne({ body: { title, body } }, res, next) {
     try {
-      const data = await this.services.create({ title, body, id: res.locals.id });
+      const data = await this.services.create({ title, body, id: res.locals.userId });
       if (data.message) next(data);
       else {
         res.locals.data = data;
@@ -20,7 +20,7 @@ export default class EntryController {
 
   async findAll(req, res, next) {
     try {
-      const data = await this.services.findByOwner(res.locals.id);
+      const data = await this.services.findByOwner(res.locals.userId);
       res.locals.data = data;
       next();
     } catch (err) {
