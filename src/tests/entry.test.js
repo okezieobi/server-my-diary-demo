@@ -13,6 +13,9 @@ describe('Authenticated User should be able to create an entry', () => {
     expect(data.entry.title).toBeString().toEqual(utils.entry.mock.title);
     expect(data.entry.body).toBeString().toEqual(utils.entry.mock.body);
     expect(data.entry.id).toBeString();
+    expect(data.entry.UserId).toBeString();
+    expect(data.entry.createdAt).toBeString();
+    expect(data.entry.updatedAt).toBeString();
   });
 
   it('Should not create an entry at "/api/v1/entries" if input fields are invalid', async () => {
@@ -119,6 +122,52 @@ describe('Authenticated User should be able to get all associated entries', () =
 
   it('Should NOT get all associated entries at at "/api/v1/entries" if User is not authenticated', async () => {
     const { status, body: { error } } = await request(app).get('/api/v1/entries')
+      .set('token', utils.user.mock2.token401);
+    expect(status).toBeNumber().toEqual(401);
+    expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
+  });
+});
+
+describe('Authenticated User can get an associated, specific entry by its id', () => {
+  it('Should get a specific entry at "/api/v1/entries/:id" by its id', async () => {
+    const { status, body: { data } } = await request(app).get(`/api/v1/entries/${utils.entry.mock.id}`)
+      .set('token', utils.user.mock2.token);
+    expect(status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['entry', 'status']);
+    expect(data.status).toBeNumber().toEqual(200);
+    expect(data.entry.title).toBeString().toEqual(utils.entry.mock.title);
+    expect(data.entry.body).toBeString().toEqual(utils.entry.mock.body);
+    expect(data.entry.id).toBeString().toEqual(utils.entry.mock.id);
+    expect(data.entry.UserId).toBeString();
+    expect(data.entry.createdAt).toBeString();
+    expect(data.entry.updatedAt).toBeString();
+  });
+
+  it('Should not get associated, specific entry at "/api/v1/entries/:id" if token is falsy', async () => {
+    const { status, body: { error } } = await request(app).get(`/api/v1/entries/${utils.entry.mock.id}`);
+    expect(status).toBeNumber().toEqual(400);
+    expect(error.messages).toBeArray().toIncludeAllMembers([
+      {
+        msg: 'Token must be string data type',
+        param: 'token',
+        location: 'headers',
+      },
+      {
+        msg: 'Token does not match Json Web Token format',
+        param: 'token',
+        location: 'headers',
+      },
+      {
+        msg: 'Token is required',
+        param: 'token',
+        location: 'headers',
+      },
+    ]);
+  });
+
+  it('Should NOT get associated, specific entries at at "/api/v1/entries/:id" if User is not authenticated', async () => {
+    const { status, body: { error } } = await request(app).get(`/api/v1/entries/${utils.entry.mock.id}`)
       .set('token', utils.user.mock2.token401);
     expect(status).toBeNumber().toEqual(401);
     expect(error).toBeObject().toContainKeys(['message', 'status']);
