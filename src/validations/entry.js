@@ -1,6 +1,6 @@
 export default class EntrySchema {
   constructor(checkSchema) {
-    this.validateCreateEntry = checkSchema({
+    this.validateInput = checkSchema({
       title: {
         in: ['body'],
         isLength: {

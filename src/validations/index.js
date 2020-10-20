@@ -19,7 +19,7 @@ export default {
     jwt: [userSchema.validateJWT, handleValidationErr],
   },
   entry: {
-    create: [entrySchema.validateCreateEntry, handleValidationErr],
+    create: [entrySchema.validateInput, handleValidationErr],
     id: [entrySchema.validateEntryId, handleValidationErr],
   },
 };
