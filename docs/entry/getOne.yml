@@ -3,7 +3,7 @@ paths:
     get:                 # endpoint request type (post request)
       tags:               # Tag property
         - Entry            # Value of the tag
-      summary: gets all associated entries of an authenticated user
+      summary: gets a specific, associated entry of an authenticated user
       security:
        - ApiKeyAuth: []
       parameters:
