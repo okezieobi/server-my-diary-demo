@@ -19,7 +19,7 @@ Object.values(models)
 
 (async () => {
   await sequelize.authenticate();
-  if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'development') {
     await sequelize.sync({ force: true, match: /dev$/ });
   }
   // no sequelize.sync(); use umzug migrations after writing models

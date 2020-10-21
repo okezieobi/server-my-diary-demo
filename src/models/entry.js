@@ -12,7 +12,7 @@ export default class Entry extends Model {
   }
 
   static async updateOne({
-    title = '', body = '', UserId, id,
+    title, body, UserId, id,
   }, transaction) {
     return this.update({ title, body }, {
       where: {
