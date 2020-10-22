@@ -198,6 +198,21 @@ describe('Authenticated User can update an associated, specific entry by its id'
     expect(data.entry.updatedAt).toBeString();
   });
 
+  // preceding tests affects results here
+  it('Should not update a specific entry at "/api/v1/entries:id" if all input fields are not sent', async () => {
+    const { status, body: { data } } = await request(app).put(`/api/v1/entries/${utils.entry.mock.id}`)
+      .set('token', utils.user.mock2.token);
+    expect(status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['entry', 'status']);
+    expect(data.status).toBeNumber().toEqual(200);
+    expect(data.entry.title).toBeString().toEqual(utils.entry.mock2.title);
+    expect(data.entry.body).toBeString().toEqual(utils.entry.mock2.body);
+    expect(data.entry.id).toBeString();
+    expect(data.entry.UserId).toBeString();
+    expect(data.entry.createdAt).toBeString();
+    expect(data.entry.updatedAt).toBeString();
+  });
+
   it('Should not update associated, specific entry at "/api/v1/entries/:id" if token is falsy', async () => {
     const { status, body: { error } } = await request(app).put(`/api/v1/entries/${utils.entry.mock.id}`)
       .send(utils.entry.mock2);
@@ -229,7 +244,7 @@ describe('Authenticated User can update an associated, specific entry by its id'
     expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
   });
 
-  it('Should NOT get associated, specific entries at at "/api/v1/entries/:id" if entry does not exist', async () => {
+  it('Should NOT update associated, specific entries at at "/api/v1/entries/:id" if entry does not exist', async () => {
     const { status, body: { error } } = await request(app).put(`/api/v1/entries/${utils.entry.mock.id404}`)
       .set('token', utils.user.mock2.token);
     expect(status).toBeNumber().toEqual(404);
