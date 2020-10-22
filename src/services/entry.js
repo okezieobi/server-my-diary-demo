@@ -26,4 +26,11 @@ export default class EntryServices {
       return data;
     });
   }
+
+  async updateOne(arg) {
+    return this.models.sequelize.transaction(async (t) => {
+      const entry = await this.models.entry.updateOne(arg, t);
+      return { entry, status: 200 };
+    });
+  }
 }

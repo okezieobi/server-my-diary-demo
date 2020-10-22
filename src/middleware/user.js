@@ -12,7 +12,7 @@ export default class UserMiddleWare {
       const user = await this.services.authJWT(id);
       if (user.message) next(user);
       else {
-        res.locals.id = id;
+        res.locals.userId = id;
         next();
       }
     } catch (err) {

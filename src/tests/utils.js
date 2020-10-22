@@ -39,5 +39,9 @@ export default {
       body: 'Test body',
       id404,
     },
+    mock2: {
+      title: '2nd test title',
+      body: '2nd test body',
+    },
   },
 };
