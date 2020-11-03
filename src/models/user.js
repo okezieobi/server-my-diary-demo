@@ -1,4 +1,4 @@
-import { Model, DataTypes, Op } from 'sequelize';
+import { Model, Op } from 'sequelize';
 
 import bcryptUtil from '../utils/bcrypt';
 
@@ -41,17 +41,7 @@ export default class User extends Model {
     });
   }
 
-  static associate(models) {
-    this.hasManyEntries = this.hasMany(models.entry, {
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-      foreignKey: {
-        allowNull: false,
-      },
-    });
-  }
-
-  static init(sequelize) {
+  static init(sequelize, DataTypes) {
     return super.init(
       {
         id: {

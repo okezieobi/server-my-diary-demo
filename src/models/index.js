@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, DataTypes } from 'sequelize';
 
 import UserModel from './user';
 import EntryModel from './entry';
@@ -9,7 +9,7 @@ const sequelize = new Sequelize(env.databaseURL, { ssl: true, dialect: 'postgres
 
 const models = { user: UserModel, entry: EntryModel };
 
-Object.values(models).forEach((model) => model.init(sequelize));
+Object.values(models).forEach((model) => model.init(sequelize, DataTypes));
 
 // Run `.associate` if it exists,
 // ie create relationships in the ORM
@@ -21,8 +21,7 @@ Object.values(models)
   await sequelize.authenticate();
   if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'production') {
     await sequelize.sync({ force: true, match: /dev$/ });
-  }
-  // no sequelize.sync(); use umzug migrations after writing models
+  }// no sequelize.sync(); use umzug migrations after writing models
 })();
 
 export default {

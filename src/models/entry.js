@@ -1,4 +1,4 @@
-import { Model, DataTypes, Op } from 'sequelize';
+import { Model, Op } from 'sequelize';
 
 export default class Entry extends Model {
   static async createOne({ title, body, id }, transaction) {
@@ -55,7 +55,7 @@ export default class Entry extends Model {
     });
   }
 
-  static init(sequelize) {
+  static init(sequelize, DataTypes) {
     return super.init({
       id: {
         type: DataTypes.UUID,

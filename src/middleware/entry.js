@@ -5,15 +5,13 @@ export default class EntryMiddleware {
   }
 
   async findOneById({ params: { id } }, res, next) {
-    try {
-      const data = await this.services.findOneByOwner({ UserId: res.locals.userId, id });
-      if (data.message) next(data);
-      else {
-        res.locals.data = data;
-        next();
-      }
-    } catch (err) {
-      next(err);
-    }
+    await this.services.findOneByOwner({ UserId: res.locals.userId, id })
+      .then((data) => {
+        if (data.message) throw data;
+        else {
+          res.locals.data = data;
+          next();
+        }
+      }).catch(next);
   }
 }

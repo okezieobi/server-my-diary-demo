@@ -11,7 +11,7 @@ export default class JWT {
     });
   }
 
-  static verify({ token }) {
+  static async verify({ token }) {
     return jwt.verify(token, env.jwtSecret);
   }
 }
