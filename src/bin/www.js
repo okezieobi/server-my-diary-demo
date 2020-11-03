@@ -11,7 +11,7 @@ import { createServer } from 'http';
 
 import app from '../app';
 
-const debug = require('debug')('server-my-diary-demo-v1:server');
+const debug = require('debug')('server-my-diary-demo:server');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -37,7 +37,7 @@ function normalizePort(val) {
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
 
 /**
