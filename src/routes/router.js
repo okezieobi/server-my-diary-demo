@@ -8,6 +8,7 @@ import controllers from '../controllers';
 import jwt from '../utils/jwt';
 
 const router = Router();
+
 const handleResponse = (req, res) => {
   if (res.locals.data.user) {
     res.locals.data.token = jwt.generate(res.locals.data.user);
