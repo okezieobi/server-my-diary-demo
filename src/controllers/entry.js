@@ -9,7 +9,7 @@ export default class EntryController {
   async createOne({ body: { title, body } }, res, next) {
     await this.services.create({ title, body, id: res.locals.userId })
       .then((data) => {
-        if (data.message) next(data);
+        if (data.message) throw data;
         else {
           res.locals.data = data;
           next();
@@ -32,7 +32,7 @@ export default class EntryController {
       UserId: res.locals.userId,
       id: res.locals.data.entry.id,
     }).then((data) => {
-      if (data.message) next(data);
+      if (data.message) throw data;
       else {
         res.locals.data = data;
         next();

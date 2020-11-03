@@ -7,7 +7,7 @@ export default class EntryMiddleware {
   async findOneById({ params: { id } }, res, next) {
     await this.services.findOneByOwner({ UserId: res.locals.userId, id })
       .then((data) => {
-        if (data.message) next(data);
+        if (data.message) throw data;
         else {
           res.locals.data = data;
           next();

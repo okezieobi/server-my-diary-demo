@@ -8,7 +8,7 @@ export default class UserController {
   async signup({ body }, res, next) {
     await this.services.create(body)
       .then((data) => {
-        if (data.message) next(data);
+        if (data.message) throw data;
         else {
           res.locals.data = data;
           next();
@@ -19,7 +19,7 @@ export default class UserController {
   async login({ body }, res, next) {
     await this.services.auth({ user: body.user, password: body.password })
       .then((data) => {
-        if (data.message) next(data);
+        if (data.message) throw data;
         else {
           res.locals.data = data;
           next();
