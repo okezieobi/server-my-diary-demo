@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import userRoutes from './users';
+import userRoutes from './user';
 import entryRoutes from './entry';
 import middleware from '../middleware';
 import validations from '../validations';

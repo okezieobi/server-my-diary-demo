@@ -6,28 +6,24 @@ export default class UserController {
   }
 
   async signup({ body }, res, next) {
-    try {
-      const data = await this.services.create(body);
-      if (data.message) next(data);
-      else {
-        res.locals.data = data;
-        next();
-      }
-    } catch (err) {
-      next(err);
-    }
+    await this.services.create(body)
+      .then((data) => {
+        if (data.message) next(data);
+        else {
+          res.locals.data = data;
+          next();
+        }
+      }).catch(next);
   }
 
   async login({ body }, res, next) {
-    try {
-      const data = await this.services.auth({ user: body.user, password: body.password });
-      if (data.message) next(data);
-      else {
-        res.locals.data = data;
-        next();
-      }
-    } catch (err) {
-      next(err);
-    }
+    await this.services.auth({ user: body.user, password: body.password })
+      .then((data) => {
+        if (data.message) next(data);
+        else {
+          res.locals.data = data;
+          next();
+        }
+      }).catch(next);
   }
 }
