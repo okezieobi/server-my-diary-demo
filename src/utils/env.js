@@ -2,7 +2,10 @@ import { config } from 'dotenv';
 
 config();
 
-const databaseURL = process.env.NODE_ENV === 'test' ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL || process.env.DEV_DATABASE_URL;
+let databaseURL;
+if (process.env.NODE_ENV === 'test') databaseURL = process.env.TEST_DATABASE_URL;
+else if (process.env.NODE_ENV === 'production') databaseURL = process.env.DATABASE_URL;
+else databaseURL = process.env.DEV_DATABASE_URL;
 
 export default {
   databaseURL,
