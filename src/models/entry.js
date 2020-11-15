@@ -55,7 +55,7 @@ export default class Entry extends Model {
     });
   }
 
-  static dataType(DataTypes) {
+  static schema(DataTypes) {
     return {
       id: {
         type: DataTypes.UUID,
@@ -77,7 +77,7 @@ export default class Entry extends Model {
 
   static init(sequelize, DataTypes) {
     return super.init({
-      ...this.dataType(DataTypes),
+      ...this.schema(DataTypes),
     },
     {
       sequelize,
