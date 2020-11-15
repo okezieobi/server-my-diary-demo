@@ -3,6 +3,7 @@ export default class UserController {
     this.services = services.user;
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
+    this.findById = this.findById.bind(this);
   }
 
   async signup({ body }, res, next) {
@@ -25,5 +26,12 @@ export default class UserController {
           next();
         }
       }).catch(next);
+  }
+
+  async findById(req, res, next) {
+    await this.services.authJWT(res.locals.userId).then((data) => {
+      if (data.message) throw data;
+      else next();
+    }).catch(next);
   }
 }
