@@ -1,17 +1,8 @@
 export default class EntryMiddleware {
-  constructor(services) {
-    this.services = services.entry;
-    this.findOneById = this.findOneById.bind(this);
-  }
-
-  async findOneById({ params: { id } }, res, next) {
-    await this.services.findOneByOwner({ UserId: res.locals.userId, id })
-      .then((data) => {
-        if (data.message) throw data;
-        else {
-          res.locals.data = data;
-          next();
-        }
-      }).catch(next);
+  constructor(validations, controllers) {
+    this.createOne = [...validations.entry.create, controllers.entry.createOne];
+    this.getAll = controllers.entry.findAll;
+    this.verifyOne = [...validations.entry.id, controllers.entry.findOneById];
+    this.updateOne = controllers.entry.updateOne;
   }
 }

@@ -4,6 +4,7 @@ export default class EntryController {
     this.createOne = this.createOne.bind(this);
     this.findAll = this.findAll.bind(this);
     this.updateOne = this.updateOne.bind(this);
+    this.findOneById = this.findOneById.bind(this);
   }
 
   async createOne({ body: { title, body } }, res, next) {
@@ -22,6 +23,17 @@ export default class EntryController {
       .then((data) => {
         res.locals.data = data;
         next();
+      }).catch(next);
+  }
+
+  async findOneById({ params: { id } }, res, next) {
+    await this.services.findOneByOwner({ UserId: res.locals.userId, id })
+      .then((data) => {
+        if (data.message) throw data;
+        else {
+          res.locals.data = data;
+          next();
+        }
       }).catch(next);
   }
 

@@ -1,15 +1,13 @@
-export default (Router, {
-  handleResponse, controllers, validations, middleware,
-}) => {
+export default (Router, { handleResponse, middleware }) => {
   const router = Router();
 
   router.route('/')
-    .post([...[validations.entry.create], controllers.entry.createOne], handleResponse)
-    .get([controllers.entry.findAll], handleResponse);
+    .post(middleware.entry.createOne, handleResponse)
+    .get(middleware.entry.getAll, handleResponse);
 
-  router.use('/:id', [...[validations.entry.id], middleware.entry.findOneById]);
+  router.use('/:id', middleware.entry.verifyOne);
   router.route('/:id')
-    .put(controllers.entry.updateOne, handleResponse)
+    .put(middleware.entry.updateOne, handleResponse)
     .get(handleResponse);
 
   return router;

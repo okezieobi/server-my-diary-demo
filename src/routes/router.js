@@ -3,8 +3,6 @@ import { Router } from 'express';
 import userRoutes from './user';
 import entryRoutes from './entry';
 import middleware from '../middleware';
-import validations from '../validations';
-import controllers from '../controllers';
 import jwt from '../utils/jwt';
 
 const router = Router();
@@ -18,10 +16,8 @@ const handleResponse = (req, res) => {
   }
 };
 
-router.use('/auth', userRoutes(Router, { handleResponse, controllers, validations }));
-router.use([...[validations.user.jwt], middleware.user.findById]);
-router.use('/entries', entryRoutes(Router, {
-  handleResponse, validations, controllers, middleware,
-}));
+router.use('/auth', userRoutes(Router, { handleResponse, middleware }));
+router.use(middleware.user.jwt);
+router.use('/entries', entryRoutes(Router, { handleResponse, middleware }));
 
 export default router;
