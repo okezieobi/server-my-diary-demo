@@ -24,7 +24,19 @@ Object.values(models)
   }// no sequelize.sync(); use umzug migrations after writing models
 })();
 
+const modelTimestamps = (SequelizeDataTypes) => ({
+  createdAt: {
+    type: SequelizeDataTypes.DATE,
+    defaultValue: SequelizeDataTypes.NOW,
+  },
+  updatedAt: {
+    type: SequelizeDataTypes.DATE,
+    defaultValue: SequelizeDataTypes.NOW,
+  },
+});
+
 export default {
   ...models,
   sequelize,
+  modelTimestamps,
 };

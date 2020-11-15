@@ -1,3 +1,5 @@
+import models from '../models';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /**
@@ -8,21 +10,8 @@ module.exports = {
      */
     await queryInterface.sequelize.transaction(async (t) => {
       await queryInterface.createTable('Entries', {
-        id: {
-          type: Sequelize.UUID,
-          defaultValue: Sequelize.UUIDV4,
-          primaryKey: true,
-        },
-        title: {
-          type: Sequelize.STRING(256),
-          allowNull: false,
-          notEmpty: true,
-        },
-        body: {
-          type: Sequelize.TEXT,
-          allowNull: false,
-          notEmpty: true,
-        },
+        ...models.entry.dataType(Sequelize),
+        ...models.modelTimestamps(Sequelize),
         UserId: {
           type: Sequelize.UUID,
           references: {
@@ -32,14 +21,6 @@ module.exports = {
             key: 'id',
           },
           allowNull: false,
-        },
-        createdAt: {
-          type: Sequelize.DATE,
-          defaultValue: Sequelize.NOW,
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
-          defaultValue: Sequelize.NOW,
         },
       }, { transaction: t });
     });

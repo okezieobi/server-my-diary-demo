@@ -55,8 +55,8 @@ export default class Entry extends Model {
     });
   }
 
-  static init(sequelize, DataTypes) {
-    return super.init({
+  static dataType(DataTypes) {
+    return {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -72,6 +72,12 @@ export default class Entry extends Model {
         allowNull: false,
         notEmpty: true,
       },
+    };
+  }
+
+  static init(sequelize, DataTypes) {
+    return super.init({
+      ...this.dataType(DataTypes),
     },
     {
       sequelize,
