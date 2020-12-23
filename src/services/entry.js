@@ -42,7 +42,7 @@ export default class EntityServices {
         transaction: t,
       });
       if (entry) data = { entry, status: 200 };
-      else data = { message: 'Entity not found', status: 404 };
+      else data = { message: 'Entry not found', status: 404 };
       return data;
     });
   }
