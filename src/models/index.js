@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Sequelize, DataTypes } from 'sequelize';
 
 import UserModel from './user';
@@ -7,7 +8,7 @@ import env from '../utils/env';
 const sequelize = new Sequelize(env.databaseURL, { ssl: true, dialect: 'postgres', logging: false });
 // pass your sequelize config here
 
-const models = { user: UserModel, entry: EntryModel };
+const models = { User: UserModel, Entry: EntryModel };
 
 Object.values(models).forEach((model) => model.init(sequelize, DataTypes));
 
@@ -18,10 +19,15 @@ Object.values(models)
   .forEach((model) => model.associate(models));
 
 (async () => {
-  await sequelize.authenticate();
-  if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'production') {
-    await sequelize.sync({ force: true, match: /dev$/ });
-  }// no sequelize.sync(); use umzug migrations after writing models
+  if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'production') {
+    await sequelize.authenticate();
+    // no sequelize.sync(); use migrations after writing models for production
+  } else {
+    await sequelize.authenticate().then(async () => {
+      await sequelize.sync({ force: true, match: /dev$/ });
+      console.log('Database connection attempt and model update successful');
+    });
+  }
 })();
 
 const modelTimestamps = (SequelizeDataTypes) => ({
@@ -39,4 +45,5 @@ export default {
   ...models,
   sequelize,
   modelTimestamps,
+  Sequelize,
 };

@@ -1,23 +1,17 @@
-import { Router } from 'express';
-
 import userRoutes from './user';
 import entryRoutes from './entry';
 import middleware from '../middleware';
-import jwt from '../utils/jwt';
 
-const router = Router();
+export default (Router) => {
+  const router = Router();
 
-const handleResponse = (req, res) => {
-  if (res.locals.data.user) {
-    res.locals.data.token = jwt.generate(res.locals.data.user);
-    res.status(res.locals.data.status).set('token', res.locals.data.token).send({ data: res.locals.data });
-  } else {
+  const handleResponse = (req, res) => {
     res.status(res.locals.data.status).send({ data: res.locals.data });
-  }
+  };
+
+  router.use('/auth', userRoutes(Router, handleResponse, middleware));
+  router.use(middleware.user.jwt);
+  router.use('/entries', entryRoutes(Router, handleResponse, middleware));
+
+  return router;
 };
-
-router.use('/auth', userRoutes(Router, { handleResponse, middleware }));
-router.use(middleware.user.jwt);
-router.use('/entries', entryRoutes(Router, { handleResponse, middleware }));
-
-export default router;
