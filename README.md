@@ -6,6 +6,8 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e2a36127ce3f408ab4428a57b7008534)](https://www.codacy.com/gh/okezieobi/server-my-diary-demo/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=okezieobi/server-my-diary-demo&amp;utm_campaign=Badge_Grade)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/e2a36127ce3f408ab4428a57b7008534)](https://www.codacy.com/gh/okezieobi/server-my-diary-demo/dashboard?utm_source=github.com&utm_medium=referral&utm_content=okezieobi/server-my-diary-demo&utm_campaign=Badge_Coverage)
+
 [![Build Status](https://travis-ci.org/okezieobi/server-my-diary-demo.svg?branch=main)](https://travis-ci.org/okezieobi/server-my-diary-demo)
 
 # server-my-diary-demo
