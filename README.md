@@ -11,13 +11,13 @@
 [![Build Status](https://travis-ci.org/okezieobi/server-my-diary-demo.svg?branch=main)](https://travis-ci.org/okezieobi/server-my-diary-demo)
 
 # server-my-diary-demo
-REST API for MyDiary, an online journal where users can pen down their thoughts and feelings
-
-## client
-https://github.com/okezieobi/client-my-diary-demo
+REST API for MyDiary, an online journal for personal use
 
 ## Live API docs
 https://diary-app-demo.herokuapp.com/api-docs
+
+## client
+https://github.com/okezieobi/client-my-diary-demo
 
 ## Required Features
 - Users can send requests create an account and log in.
