@@ -14,7 +14,7 @@ REST API for MyDiary, an online journal for personal use
 ## Live API docs
 https://diary-app-demo.herokuapp.com/api-docs
 
-## client
+## client repo
 https://github.com/okezieobi/client-my-diary-demo
 
 ## Required Features
