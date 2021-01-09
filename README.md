@@ -8,6 +8,8 @@
 
 [![Build Status](https://travis-ci.com/okezieobi/server-my-diary-demo.svg?branch=main)](https://travis-ci.com/okezieobi/server-my-diary-demo)
 
+[![Coverage Status](https://coveralls.io/repos/github/okezieobi/server-my-diary-demo/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/server-my-diary-demo?branch=main)
+
 # server-my-diary-demo
 REST API for MyDiary, an online journal for personal use
 
