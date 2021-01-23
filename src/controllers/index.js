@@ -14,5 +14,5 @@ const user = new UserController(services, handleServiceOutput);
 const entry = new EntryController(services, handleServiceOutput);
 
 export default {
-  user, entry,
+  user, entry, User: UserController,
 };
