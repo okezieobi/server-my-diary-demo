@@ -27,6 +27,7 @@ paths:
 components:        # Schema definition for request body
  schemas:
   signup:
+    type: object
     properties:
           fullName:
             type: string

@@ -29,6 +29,7 @@ paths:
 components:        # Schema definition for request body
  schemas:
   update:
+    type: object
     properties:
           title:
             type: string

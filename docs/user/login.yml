@@ -25,6 +25,7 @@ paths:
 components:        # Schema definition for request body
  schemas:
   login:
+    type: object
     properties:
           user:
             type: string
