@@ -15,4 +15,6 @@ paths:
             type: uuid
       responses:          # server responses
         200:
-          description: An object with entry details
+          description: An object with with entry details 
+        401:
+          description: Error message object in error property of response body

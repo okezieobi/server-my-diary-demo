@@ -9,12 +9,16 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/create'
       responses:          # server responses
         201:
           description: An object with entry details
+        401:
+          description: Error message object in error property of response body
+        400:
+          description: Error message object in error property of response body
 components:        # Schema definition for request body
  schemas:
   create:
