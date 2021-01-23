@@ -4,8 +4,8 @@ export default class EntrySchema {
       title: {
         in: ['body'],
         isLength: {
-          errorMessage: 'Entry title should be at most 256 characters long',
-          options: { min: 1, max: 256 },
+          errorMessage: 'Entry title should be at least a character long',
+          options: { min: 1 },
         },
         isString: {
           errorMessage: 'Entry title must be string data type',
@@ -18,7 +18,7 @@ export default class EntrySchema {
       body: {
         in: ['body'],
         isLength: {
-          errorMessage: 'Entry body should be at least 1 character long',
+          errorMessage: 'Entry body should be at least a character long',
           options: { min: 1 },
         },
         isString: {

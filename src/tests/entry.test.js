@@ -24,7 +24,7 @@ describe('Authenticated User should be able to create an entry', () => {
     expect(status).toBeNumber().toEqual(400);
     expect(error.messages).toBeArray().toIncludeAllMembers([
       {
-        msg: 'Entry title should be at most 256 characters long',
+        msg: 'Entry title should be at least a character long',
         param: 'title',
         location: 'body',
       },
@@ -39,7 +39,7 @@ describe('Authenticated User should be able to create an entry', () => {
         location: 'body',
       },
       {
-        msg: 'Entry body should be at least 1 character long',
+        msg: 'Entry body should be at least a character long',
         param: 'body',
         location: 'body',
       },
