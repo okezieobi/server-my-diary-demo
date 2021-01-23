@@ -31,7 +31,7 @@ REST API for MyDiary, an online journal for personal use
 
 ## Optional Features
 
-- Users send requests set and get daily notifications that prompt them to add an entry to their diary.
+- Authorized users send requests set and get daily notifications that prompt them to add an entry to their diary.
 
 ## Stack
 
