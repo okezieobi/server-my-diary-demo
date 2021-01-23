@@ -24,10 +24,10 @@ REST API for MyDiary, an online journal for personal use
 
 ## Required Features
 
-- Users can send requests create an account and log in.
-- Users send requests view all entries to their diary.
-- Users send requests view the contents of a diary entry.
-- Users send requests add or modify an entry.
+- Users can send requests to create an account ie signup and log in.
+- Authorized users send requests to view all entries to their diary.
+- Authorized users send requests to view the contents of a diary entry.
+- Authorized users send requests to add or modify an entry.
 
 ## Optional Features
 
