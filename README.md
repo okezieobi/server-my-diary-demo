@@ -14,7 +14,6 @@ REST API for MyDiary, an online journal for personal use
 
 [![Coverage Status](https://coveralls.io/repos/github/okezieobi/server-my-diary-demo/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/server-my-diary-demo?branch=main)
 
-
 ## Live API docs
 
 <https://diary-app-demo.herokuapp.com/api-docs>
