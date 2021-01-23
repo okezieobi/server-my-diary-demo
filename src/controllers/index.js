@@ -1,7 +1,6 @@
 import services from '../services';
 import UserController from './user';
 import EntryController from './entry';
-import jwt from '../utils/jwt';
 
 const handleServiceOutput = (data, { locals }, next) => {
   if (data.message) throw data;
@@ -11,9 +10,9 @@ const handleServiceOutput = (data, { locals }, next) => {
     next();
   }
 };
-const user = new UserController(services, handleServiceOutput, jwt);
+const user = new UserController(services, handleServiceOutput);
 const entry = new EntryController(services, handleServiceOutput);
 
 export default {
-  user, entry,
+  user, entry, User: UserController,
 };
