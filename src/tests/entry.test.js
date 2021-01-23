@@ -59,7 +59,7 @@ describe('Authenticated User should be able to create an entry', () => {
   it('Should not create an entry at "/api/v1/entries" if token is falsy', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/entries')
       .send(utils.entity);
-    expect(status).toBeNumber().toEqual(400);
+    expect(status).toBeNumber().toEqual(401);
     expect(error.messages).toBeArray().toIncludeAllMembers([
       {
         msg: 'Token must be string data type',
@@ -100,7 +100,7 @@ describe('Authenticated User should be able to get all associated entries', () =
 
   it('Should not get associated entries at "/api/v1/entries" if token is falsy', async () => {
     const { status, body: { error } } = await request(app).get('/api/v1/entries');
-    expect(status).toBeNumber().toEqual(400);
+    expect(status).toBeNumber().toEqual(401);
     expect(error.messages).toBeArray().toIncludeAllMembers([
       {
         msg: 'Token must be string data type',
@@ -146,7 +146,7 @@ describe('Authenticated User can get an associated, specific entry by its id', (
 
   it('Should not get associated, specific entry at "/api/v1/entries/:id" if token is falsy', async () => {
     const { status, body: { error } } = await request(app).get(`/api/v1/entries/${utils.seed.entryDAO.id}`);
-    expect(status).toBeNumber().toEqual(400);
+    expect(status).toBeNumber().toEqual(401);
     expect(error.messages).toBeArray().toIncludeAllMembers([
       {
         msg: 'Token must be string data type',
@@ -216,7 +216,7 @@ describe('Authenticated User can update an associated, specific entry by its id'
   it('Should not update associated, specific entry at "/api/v1/entries/:id" if token is falsy', async () => {
     const { status, body: { error } } = await request(app).put(`/api/v1/entries/${utils.seed.entryDAO.id}`)
       .send(utils.entity);
-    expect(status).toBeNumber().toEqual(400);
+    expect(status).toBeNumber().toEqual(401);
     expect(error.messages).toBeArray().toIncludeAllMembers([
       {
         msg: 'Token must be string data type',

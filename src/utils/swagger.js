@@ -1,11 +1,12 @@
 import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUI from 'swagger-ui-express';
 
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
     title: 'REST API for My Diary app', // Title of the documentation
     version: '1.0.0', // Version of the app
-    description: 'REST API for MyDiary is an online journal where users can pen down their thoughts and feelings', // short description of the app
+    description: 'REST API for MyDiary is an online journal for personal use', // short description of the app
   },
   servers: [
     { url: 'https://diary-app-demo.herokuapp.com/api/v1', description: 'Deployed server on Heroku' },
@@ -15,7 +16,7 @@ const swaggerDefinition = {
     securitySchemes: {
       ApiKeyAuth: {
         type: 'apiKey',
-        in: 'header',
+        in: 'cookie',
         name: 'token',
       },
     },
@@ -28,6 +29,10 @@ const options = {
   swaggerDefinition,
   // path to the API docs
   apis: ['./docs/**/*.yml'],
+  withCredentials: true,
 };
 // initialize swagger-jsdoc
-export default swaggerJSDoc(options);
+export default {
+  setup: swaggerUI.setup(swaggerJSDoc(options)),
+  serve: swaggerUI.serve,
+};
