@@ -21,7 +21,6 @@ export default class UserController {
 
   static logout(req, res, next) {
     res.locals.data = {};
-    res.locals.data.status = 200;
     res.cookie('token', null);
     next();
   }

@@ -26,7 +26,7 @@ export default class EntityServices {
         },
         transaction: t,
       });
-      return { entries, status: 200 };
+      return { entries };
     });
   }
 
@@ -41,7 +41,7 @@ export default class EntityServices {
         },
         transaction: t,
       });
-      if (entry) data = { entry, status: 200 };
+      if (entry) data = { entry };
       else data = { message: 'Entry not found', status: 404 };
       return data;
     });
@@ -67,7 +67,7 @@ export default class EntityServices {
         },
         transaction: t,
       });
-      return { entry, status: 200 };
+      return { entry };
     });
   }
 }

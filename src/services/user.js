@@ -61,7 +61,7 @@ export default class UserServices {
               exclude: ['password'],
             },
           });
-          data = { user, status: 200 };
+          data = { user };
         } else data = { message: 'Password provided does not match user', status: 401 };
       } else data = { message: 'User not found, please sign up by creating an account', status: 404 };
       return data;
@@ -77,7 +77,7 @@ export default class UserServices {
           exclude: ['password'],
         },
       });
-      if (user) data = { user, status: 200 };
+      if (user) data = { user };
       else data = { message: 'User not found, please sign up by creating an account', status: 401 };
       return data;
     });

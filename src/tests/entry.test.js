@@ -93,8 +93,7 @@ describe('Authenticated User should be able to get all associated entries', () =
     const { status, body: { data } } = await request(app).get('/api/v1/entries')
       .set('Cookie', `token=${utils.token}`);
     expect(status).toBeNumber().toEqual(200);
-    expect(data).toBeObject().toContainKeys(['entries', 'status']);
-    expect(data.status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['entries']);
     expect(data.entries).toBeArray();
   });
 
@@ -134,8 +133,7 @@ describe('Authenticated User can get an associated, specific entry by its id', (
     const { status, body: { data } } = await request(app).get(`/api/v1/entries/${utils.seed.entryDAO.id}`)
       .set('Cookie', `token=${utils.token}`);
     expect(status).toBeNumber().toEqual(200);
-    expect(data).toBeObject().toContainKeys(['entry', 'status']);
-    expect(data.status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['entry']);
     expect(data.entry.title).toBeString().toEqual(utils.entry.title);
     expect(data.entry.body).toBeString().toEqual(utils.entry.body);
     expect(data.entry.id).toBeString().toEqual(utils.seed.entryDAO.id);
@@ -188,8 +186,7 @@ describe('Authenticated User can update an associated, specific entry by its id'
     const { status, body: { data } } = await request(app).put(`/api/v1/entries/${utils.seed.entryDAO.id}`)
       .set('Cookie', `token=${utils.token}`).send(utils.entry);
     expect(status).toBeNumber().toEqual(200);
-    expect(data).toBeObject().toContainKeys(['entry', 'status']);
-    expect(data.status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['entry']);
     expect(data.entry.title).toBeString().toEqual(utils.entry.title);
     expect(data.entry.body).toBeString().toEqual(utils.entry.body);
     expect(data.entry.id).toBeString();
@@ -203,8 +200,7 @@ describe('Authenticated User can update an associated, specific entry by its id'
     const { status, body: { data } } = await request(app).put(`/api/v1/entries/${utils.seed.entryDAO.id}`)
       .set('Cookie', `token=${utils.token}`).send(utils.entry);
     expect(status).toBeNumber().toEqual(200);
-    expect(data).toBeObject().toContainKeys(['entry', 'status']);
-    expect(data.status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['entry']);
     expect(data.entry.title).toBeString().toEqual(utils.entry.title);
     expect(data.entry.body).toBeString().toEqual(utils.entry.body);
     expect(data.entry.id).toBeString();
