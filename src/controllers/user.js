@@ -19,6 +19,13 @@ export default class UserController {
       .then((data) => this.handleServiceOutput(data, res, next)).catch(next);
   }
 
+  static logout(req, res, next) {
+    res.locals.data = {};
+    res.locals.data.status = 200;
+    res.cookie('token', null);
+    next();
+  }
+
   findById(req, { locals: { userId } }, next) {
     this.service.authJWT(userId).then((data) => {
       if (data.message) throw data;

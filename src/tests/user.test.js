@@ -99,7 +99,7 @@ describe('User should be able to signup to the app', () => {
 });
 
 describe('User should be able to login to the app', () => {
-  it('Should be able login a User at "/api/v1/auth/login" user and password fields are valid', async () => {
+  it('Should be able login a User at "/api/v1/auth/login" if user and password fields are valid', async () => {
     const { status, body: { data } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.email || utils.user.username, password: utils.user.password });
     expect(status).toBeNumber().toEqual(200);
     expect(data).toBeObject().toContainKeys(['user', 'status']);
@@ -162,5 +162,22 @@ describe('User should be able to login to the app', () => {
     expect(status).toBeNumber().toEqual(401);
     expect(error).toBeObject().toContainKeys(['message', 'status']);
     expect(error.message).toBeString().toEqual('Password provided does not match user');
+  });
+});
+
+describe('User should be able to logout after signup or login', () => {
+  it('Should be able logout a User at "/api/v1/auth/logout"', async () => {
+    const { status, body: { data } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.email || utils.user.username, password: utils.user.password });
+    expect(status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['user', 'status']);
+    expect(data.status).toBeNumber().toEqual(200);
+    expect(data.user.fullName).toBeString().toEqual(utils.user.fullName);
+    expect(data.user.username).toBeString().toEqual(utils.user.username);
+    expect(data.user.email).toBeString().toEqual(utils.user.email);
+    expect(data.user.type).toBeString().toEqual('Client');
+    expect(data.user.createdAt).toBeString();
+    expect(data.user.updatedAt).toBeString();
+    const logout = await request(app).post('/api/v1/auth/logout');
+    expect(logout.status).toBeNumber().toEqual(200);
   });
 });
