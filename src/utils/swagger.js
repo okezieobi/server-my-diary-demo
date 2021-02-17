@@ -10,7 +10,7 @@ const swaggerDefinition = {
   },
   servers: [
     { url: 'https://diary-app-demo.herokuapp.com/api/v1', description: 'Deployed server on Heroku' },
-    { url: 'http://localhost:3000/api/v1', description: 'Local development/testing server' },
+    { url: 'http://localhost:5000/api/v1', description: 'Local development/testing server' },
   ],
   components: {
     securitySchemes: {
