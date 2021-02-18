@@ -4,5 +4,6 @@ export default class UserMiddleWare {
     this.login = [...validations.user.login, controllers.user.login, controllers.User.setJWT];
     this.jwt = [...validations.user.jwt, controllers.User.verifyJWT, controllers.user.findById];
     this.logout = controllers.User.logout;
+    this.getUser = controllers.user.getUser;
   }
 }

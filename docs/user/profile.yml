@@ -1,0 +1,13 @@
+paths:
+  /auth/profile/:                # path of the user from your endpoint
+    get:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - User            # Value of the tag
+      summary: gets details of authorized user
+      security:
+       - ApiKeyAuth: []
+      responses:          # server responses
+        200:
+          description: An object with user details
+        401:
+          description: Error message object in error property of response body

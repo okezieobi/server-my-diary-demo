@@ -1,16 +1,6 @@
 import { Model } from 'sequelize';
 
 export default class Entry extends Model {
-  static associate({ User }) {
-    this.belongsToUser = this.belongsTo(User, {
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-      foreignKey: {
-        allowNull: false,
-      },
-    });
-  }
-
   static tableColumns(DataTypes) {
     return {
       id: {

@@ -7,6 +7,7 @@ export default class UserController {
     this.signup = this.signup.bind(this);
     this.findById = this.findById.bind(this);
     this.handleServiceOutput = handleServiceOutput;
+    this.getUser = this.getUser.bind(this);
   }
 
   signup({ body }, res, next) {
@@ -30,6 +31,14 @@ export default class UserController {
       if (data.message) throw data;
       else next();
     }).catch(next);
+  }
+
+  getUser(req, res, next) {
+    this.service.getUser(res.locals.userId)
+      .then((data) => {
+        res.locals.data = data;
+        next();
+      }).catch(next);
   }
 
   static setJWT(req, res, next) {

@@ -5,7 +5,7 @@ import UserModel from './user';
 import EntryModel from './entry';
 import env from '../utils/env';
 
-const sequelize = new Sequelize(env.databaseURL, { ssl: true, dialect: 'postgres', logging: false });
+const sequelize = new Sequelize(env.databaseURL, { ssl: true, dialect: 'postgres' });
 // pass your sequelize config here
 
 const models = { User: UserModel, Entry: EntryModel };
