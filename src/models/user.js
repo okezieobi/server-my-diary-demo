@@ -7,6 +7,16 @@ export default class User extends Model {
     return bcrypt.compareString(hashedPassword, password);
   }
 
+  static associate({ Entry }) {
+    this.hasManyEntries = this.hasMany(Entry, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  }
+
   static tableColumns(DataTypes) {
     return {
       id: {

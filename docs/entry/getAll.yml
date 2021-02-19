@@ -8,6 +8,6 @@ paths:
        - ApiKeyAuth: []
       responses:          # server responses
         200:
-          description: An object with an array entries
+          description: An object with an array of entries
         401:
           description: Error message object in error property of response body

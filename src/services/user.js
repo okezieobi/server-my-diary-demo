@@ -1,6 +1,9 @@
 export default class UserServices {
-  constructor({ User, sequelize, Sequelize }) {
+  constructor({
+    User, Entry, sequelize, Sequelize,
+  }) {
     this.model = User;
+    this.entryModel = Entry;
     this.sequelize = sequelize;
     this.Sequelize = Sequelize;
   }
@@ -61,7 +64,7 @@ export default class UserServices {
               exclude: ['password'],
             },
           });
-          data = { user, status: 200 };
+          data = { user };
         } else data = { message: 'Password provided does not match user', status: 401 };
       } else data = { message: 'User not found, please sign up by creating an account', status: 404 };
       return data;
@@ -77,9 +80,19 @@ export default class UserServices {
           exclude: ['password'],
         },
       });
-      if (user) data = { user, status: 200 };
+      if (user) data = { user };
       else data = { message: 'User not found, please sign up by creating an account', status: 401 };
       return data;
     });
+  }
+
+  async getUser(arg) {
+    return this.sequelize.transaction(async (t) => this.model.findByPk(arg, {
+      transaction: t,
+      attributes: {
+        exclude: ['password'],
+      },
+      include: { model: this.entryModel },
+    }));
   }
 }
