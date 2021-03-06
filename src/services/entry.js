@@ -1,3 +1,5 @@
+import CustomError from './error';
+
 export default class EntityServices {
   constructor({ Entry, sequelize, Sequelize }) {
     this.model = Entry;
@@ -32,7 +34,6 @@ export default class EntityServices {
 
   async findOneByOwner({ UserId, id }) {
     return this.sequelize.transaction(async (t) => {
-      let data;
       const entry = await this.model.findOne({
         where: {
           [this.Sequelize.Op.and]: [
@@ -41,9 +42,8 @@ export default class EntityServices {
         },
         transaction: t,
       });
-      if (entry) data = { entry };
-      else data = { message: 'Entry not found', status: 404 };
-      return data;
+      if (entry === null) throw new CustomError(404, 'Entry not found');
+      return { entry };
     });
   }
 

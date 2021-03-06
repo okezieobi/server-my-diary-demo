@@ -62,9 +62,8 @@ export default class UserSchemas {
       },
       email: {
         in: ['body'],
-        isLength: {
-          errorMessage: 'Email should be at least a character long',
-          options: { min: 1 },
+        isEmail: {
+          errorMessage: 'Email format is wrong',
         },
         isString: {
           errorMessage: 'Email must be string data type',
@@ -72,9 +71,6 @@ export default class UserSchemas {
         exists: {
           errorMessage: 'Email is required',
           options: { checkFalsy: true },
-        },
-        isEmail: {
-          errorMessage: 'Email format is wrong',
         },
       },
       password: {
