@@ -21,8 +21,8 @@ export default class Entry extends Model {
     };
   }
 
-  static init(sequelize, DataTypes) {
-    return super.init({
+  static initialize(sequelize, DataTypes) {
+    return this.init({
       ...this.tableColumns(DataTypes),
     },
     {

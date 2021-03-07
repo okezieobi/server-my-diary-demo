@@ -5,18 +5,20 @@ import UserModel from './user';
 import EntryModel from './entry';
 import env from '../utils/env';
 
-const sequelize = new Sequelize(env.databaseURL, { ssl: true, dialect: 'postgres', logging: false });
+const sequelize = new Sequelize(env.databaseURL || '', { ssl: true, dialect: 'postgres', logging: false });
 // pass your sequelize config here
 
 const models = { User: UserModel, Entry: EntryModel };
 
-Object.values(models).forEach((model) => model.init(sequelize, DataTypes));
+Object.values(models).forEach((model) => model.initialize(sequelize, DataTypes));
 
 // Run `.associate` if it exists,
 // ie create relationships in the ORM
-Object.values(models)
-  .filter((model) => typeof model.associate === 'function')
-  .forEach((model) => model.associate(models));
+Object.keys(models).forEach((modelName) => {
+  if (models[modelName].associate) {
+    models[modelName].associate(models);
+  }
+});
 
 (async () => {
   if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'production') {

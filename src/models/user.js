@@ -58,8 +58,8 @@ export default class User extends Model {
     };
   }
 
-  static init(sequelize, DataTypes) {
-    return super.init(
+  static initialize(sequelize, DataTypes) {
+    return this.init(
       {
         ...this.tableColumns(DataTypes),
       },
