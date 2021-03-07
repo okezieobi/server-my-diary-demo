@@ -35,12 +35,16 @@ export default class UserController {
       }).catch(next);
   }
 
-  findById(req, { locals: { userId } }, next) {
-    this.service.authJWT(userId).then(() => next()).catch(next);
+  findById({ cookies }, res, next) {
+    const decoded = jwt.verify(cookies);
+    this.service.authJWT(decoded).then((user) => {
+      res.locals.user = user;
+      next();
+    }).catch(next);
   }
 
-  getUser({ cookies }, res, next) {
-    const userId = jwt.verify(cookies);
+  getUser(req, res, next) {
+    const userId = jwt.verify(res.locals.user.id);
     this.service.getUser(userId)
       .then((data) => {
         res.locals.data = data;

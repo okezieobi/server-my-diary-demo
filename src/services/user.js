@@ -41,7 +41,7 @@ export default class UserServices {
 
   async auth(arg) {
     return this.sequelize.transaction(async (t) => {
-      const userExists = await this.model.findOne({
+      const user = await this.model.findOne({
         where: {
           [this.Sequelize.Op.or]: [
             { email: arg.user }, { username: arg.user },
@@ -49,24 +49,24 @@ export default class UserServices {
         },
         transaction: t,
       });
-      if (userExists) {
-        const verifyPassword = await this.model.compareString(userExists.password, arg.password);
+      if (user) {
+        const verifyPassword = await this.model.compareString(user.password, arg.password);
         if (!verifyPassword) throw new CustomError(401, 'Password provided does not match user');
       } else throw new CustomError(404, 'User not found, please sign up by creating an account');
-      return { userExists };
+      return { user };
     });
   }
 
-  async authJWT(arg) {
+  async authJWT({ id }) {
     return this.sequelize.transaction(async (t) => {
-      const user = await this.model.findByPk(arg, {
+      const user = await this.model.findByPk(id, {
         transaction: t,
         attributes: {
           exclude: ['password'],
         },
       });
       if (user === null) throw new CustomError(401, 'User not found, please sign up by creating an account');
-      return { user };
+      return user;
     });
   }
 

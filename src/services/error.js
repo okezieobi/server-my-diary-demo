@@ -1,5 +1,5 @@
 export default class CustomError extends Error {
-  constructor(status = 400, params) {
+  constructor(status = 400, ...params) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor
     super(...params);
 

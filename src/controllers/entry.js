@@ -8,7 +8,7 @@ export default class EntryController {
   }
 
   createOne({ body: { title, body } }, res, next) {
-    this.service.create({ title, body, UserId: res.locals.userId })
+    this.service.create({ title, body, UserId: res.locals.user.id })
       .then((data) => {
         res.locals.data = data;
         next();
@@ -16,7 +16,7 @@ export default class EntryController {
   }
 
   findAll(req, res, next) {
-    this.service.findByOwner(res.locals.userId)
+    this.service.findByOwner(res.locals.user.id)
       .then((data) => {
         res.locals.data = data;
         next();
@@ -24,7 +24,7 @@ export default class EntryController {
   }
 
   findOneById({ params: { id } }, res, next) {
-    this.service.findOneByOwner({ UserId: res.locals.userId, id })
+    this.service.findOneByOwner({ UserId: res.locals.user.id, id })
       .then((data) => {
         res.locals.data = data;
         next();
@@ -35,7 +35,7 @@ export default class EntryController {
     this.service.updateOne({
       title: title || res.locals.data.entity.title,
       body: body || res.locals.data.entity.body,
-      UserId: res.locals.userId,
+      UserId: res.locals.user.id,
       id: res.locals.data.entry.id,
     }).then((data) => {
       res.locals.data = data;
