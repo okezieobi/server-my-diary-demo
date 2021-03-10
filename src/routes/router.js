@@ -1,5 +1,6 @@
-import userRoutes from './user';
+import authRoutes from './auth';
 import entryRoutes from './entry';
+import userRoutes from './user';
 import middleware from '../middleware';
 
 export default (Router) => {
@@ -10,8 +11,9 @@ export default (Router) => {
       .send({ data: res.locals.data || {} });
   };
 
-  router.use('/auth', userRoutes(Router, handleResponse, middleware));
+  router.use('/auth', authRoutes(Router, handleResponse, middleware));
   router.use(middleware.user.jwt);
+  router.use('/users', userRoutes(Router, handleResponse, middleware));
   router.use('/entries', entryRoutes(Router, handleResponse, middleware));
 
   return router;

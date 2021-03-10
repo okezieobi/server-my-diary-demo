@@ -22,7 +22,7 @@ describe('Authenticated User should be able to create an entry', () => {
     const { status, body: { error } } = await request(app).post('/api/v1/entries')
       .set('Cookie', `token=${utils.token}`);
     expect(status).toBeNumber().toEqual(400);
-    expect(error.messages).toBeArray().toIncludeAllMembers([
+    expect(error).toBeArray().toIncludeAllMembers([
       {
         msg: 'Entry title should be at least a character long',
         param: 'title',
@@ -60,7 +60,7 @@ describe('Authenticated User should be able to create an entry', () => {
     const { status, body: { error } } = await request(app).post('/api/v1/entries')
       .send(utils.entity);
     expect(status).toBeNumber().toEqual(401);
-    expect(error.messages).toBeArray().toIncludeAllMembers([
+    expect(error).toBeArray().toIncludeAllMembers([
       {
         msg: 'Token must be string data type',
         param: 'token',
@@ -83,8 +83,7 @@ describe('Authenticated User should be able to create an entry', () => {
     const { status, body: { error } } = await request(app).post('/api/v1/entries')
       .set('Cookie', `token=${utils.token401}`).send(utils.entry);
     expect(status).toBeNumber().toEqual(401);
-    expect(error).toBeObject().toContainKeys(['message', 'status']);
-    expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
+    expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
   });
 });
 
@@ -100,7 +99,7 @@ describe('Authenticated User should be able to get all associated entries', () =
   it('Should not get associated entries at "/api/v1/entries" if token is falsy', async () => {
     const { status, body: { error } } = await request(app).get('/api/v1/entries');
     expect(status).toBeNumber().toEqual(401);
-    expect(error.messages).toBeArray().toIncludeAllMembers([
+    expect(error).toBeArray().toIncludeAllMembers([
       {
         msg: 'Token must be string data type',
         param: 'token',
@@ -123,8 +122,7 @@ describe('Authenticated User should be able to get all associated entries', () =
     const { status, body: { error } } = await request(app).get('/api/v1/entries')
       .set('Cookie', `token=${utils.token401}`);
     expect(status).toBeNumber().toEqual(401);
-    expect(error).toBeObject().toContainKeys(['message', 'status']);
-    expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
+    expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
   });
 });
 
@@ -145,7 +143,7 @@ describe('Authenticated User can get an associated, specific entry by its id', (
   it('Should not get associated, specific entry at "/api/v1/entries/:id" if token is falsy', async () => {
     const { status, body: { error } } = await request(app).get(`/api/v1/entries/${utils.seed.entryDAO.id}`);
     expect(status).toBeNumber().toEqual(401);
-    expect(error.messages).toBeArray().toIncludeAllMembers([
+    expect(error).toBeArray().toIncludeAllMembers([
       {
         msg: 'Token must be string data type',
         param: 'token',
@@ -168,16 +166,14 @@ describe('Authenticated User can get an associated, specific entry by its id', (
     const { status, body: { error } } = await request(app).get(`/api/v1/entries/${utils.seed.entryDAO.id}`)
       .set('Cookie', `token=${utils.token401}`);
     expect(status).toBeNumber().toEqual(401);
-    expect(error).toBeObject().toContainKeys(['message', 'status']);
-    expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
+    expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
   });
 
   it('Should NOT get associated, specific entry at at "/api/v1/entries/:id" if entry does not exist', async () => {
     const { status, body: { error } } = await request(app).get(`/api/v1/entries/${utils.user404DAO.id}`)
       .set('Cookie', `token=${utils.token}`);
     expect(status).toBeNumber().toEqual(404);
-    expect(error).toBeObject().toContainKeys(['message', 'status']);
-    expect(error.message).toBeString().toEqual('Entry not found');
+    expect(error).toBeString().toEqual('Entry not found');
   });
 });
 
@@ -213,7 +209,7 @@ describe('Authenticated User can update an associated, specific entry by its id'
     const { status, body: { error } } = await request(app).put(`/api/v1/entries/${utils.seed.entryDAO.id}`)
       .send(utils.entity);
     expect(status).toBeNumber().toEqual(401);
-    expect(error.messages).toBeArray().toIncludeAllMembers([
+    expect(error).toBeArray().toIncludeAllMembers([
       {
         msg: 'Token must be string data type',
         param: 'token',
@@ -236,15 +232,13 @@ describe('Authenticated User can update an associated, specific entry by its id'
     const { status, body: { error } } = await request(app).put(`/api/v1/entries/${utils.seed.entryDAO.id}`)
       .set('Cookie', `token=${utils.token401}`);
     expect(status).toBeNumber().toEqual(401);
-    expect(error).toBeObject().toContainKeys(['message', 'status']);
-    expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
+    expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
   });
 
   it('Should NOT update associated, specific entry at at "/api/v1/entries/:id" if entry does not exist', async () => {
     const { status, body: { error } } = await request(app).put(`/api/v1/entries/${utils.seed.userDAO.id}`)
       .set('Cookie', `token=${utils.token}`);
     expect(status).toBeNumber().toEqual(404);
-    expect(error).toBeObject().toContainKeys(['message', 'status']);
-    expect(error.message).toBeString().toEqual('Entry not found');
+    expect(error).toBeString().toEqual('Entry not found');
   });
 });

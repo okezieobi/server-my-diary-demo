@@ -1,6 +1,6 @@
 # server-my-diary-demo
 
-REST API for MyDiary, an online journal for personal use
+## REST API for MyDiary, an online journal for personal use
 
 ![Node.js CI](https://github.com/okezieobi/server-my-diary-demo/workflows/Node.js%20CI/badge.svg)
 
