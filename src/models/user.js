@@ -1,7 +1,7 @@
 import bcrypt from '../utils/bcrypt';
 
-module.exports = (sequelize, DataTypes) => {
-  const table = {
+module.exports = (sequelize, SequelizeDatatype) => {
+  const table = (DataTypes) => ({
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -38,24 +38,21 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'Client',
       isIn: [['Client', 'Admin']],
     },
+  });
+
+  const model = sequelize.define('User', table(SequelizeDatatype));
+
+  model.associate = ({ Entry }) => {
+    model.hasManyEntries = model.hasMany(Entry, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
   };
 
-  const model = sequelize.define('User', table, {
-    classMethods: {
-      associate({ Entry }) {
-        this.hasManyEntries = this.hasMany(Entry, {
-          onDelete: 'CASCADE',
-          onUpdate: 'CASCADE',
-          foreignKey: {
-            allowNull: false,
-          },
-        });
-      },
-      async compareString(hashedPassword = '', password = '') {
-        return bcrypt.compareString(hashedPassword, password);
-      },
-    },
-  });
+  model.compareString = (hashedPassword = '', password = '') => bcrypt.compareString(hashedPassword, password);
 
   return { model, table };
 };

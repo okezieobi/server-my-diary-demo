@@ -44,8 +44,7 @@ export default class UserController {
   }
 
   getUser(req, res, next) {
-    const userId = jwt.verify(res.locals.user.id);
-    this.service.getUser(userId)
+    this.service.getUser(res.locals.user.id)
       .then((data) => {
         res.locals.data = data;
         next();

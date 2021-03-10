@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) => {
-  const table = {
+module.exports = (sequelize, SequelizeDatatype) => {
+  const table = (DataTypes) => ({
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       notEmpty: true,
     },
-  };
+  });
 
-  const model = sequelize.define('Entry', table);
+  const model = sequelize.define('Entry', table(SequelizeDatatype));
 
   return { model, table };
 };
