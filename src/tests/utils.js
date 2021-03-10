@@ -7,19 +7,19 @@ const user = {
 const newUser = {
   fullName: 'test-fullName-new', username: 'test-username-new', email: 'test-new@email.com', password: 'test-password',
 };
-const userDAO = models.User.build(user).toJSON();
+const userDAO = models.User.build(user);
 // @ts-ignore
 const token = jwt.generate(userDAO);
 const user404 = {
   fullName: 'test-fullName-fake', username: 'test-username-fake', email: 'test-fake@email.com', password: 'test-password',
 };
-const user404DAO = models.User.build(user404).toJSON();
+const user404DAO = models.User.build(user404);
 // @ts-ignore
 const token401 = jwt.generate(user404DAO);
 
 // @ts-ignore
 const entry = { title: 'test-title', body: 'test-body', UserId: userDAO.id };
-const entryDAO = models.Entry.build(entry).toJSON();
+const entryDAO = models.Entry.build(entry);
 
 export default {
   seed: { userDAO, entryDAO },

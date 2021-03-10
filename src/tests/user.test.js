@@ -19,9 +19,9 @@ describe('User should be able to signup to the app', () => {
   it('Should NOT create a User at "/api/v1/auth/signup" if username, fullName, email or password fields are invalid', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/auth/signup');
     expect(status).toBeNumber().toEqual(400);
-    expect(error).toBeObject().toContainKeys(['messages', 'status']);
-    expect(error.status).toBeNumber().toEqual(400);
-    expect(error.messages).toBeArray().toIncludeAllMembers([
+    // expect(error).toBeObject().toContainKeys(['messages', 'status']);
+    // expect(error.status).toBeNumber().toEqual(400);
+    expect(error).toBeArray().toIncludeAllMembers([
       {
         msg: 'Username should be at least a character long',
         param: 'username',
@@ -53,7 +53,7 @@ describe('User should be able to signup to the app', () => {
         location: 'body',
       },
       {
-        msg: 'Email should be at least a character long',
+        msg: 'Email format is wrong',
         param: 'email',
         location: 'body',
       },
@@ -64,11 +64,6 @@ describe('User should be able to signup to the app', () => {
       },
       {
         msg: 'Email is required',
-        param: 'email',
-        location: 'body',
-      },
-      {
-        msg: 'Email format is wrong',
         param: 'email',
         location: 'body',
       },
@@ -93,8 +88,8 @@ describe('User should be able to signup to the app', () => {
   it('Should NOT create a User at "/api/v1/auth/signup" if username or email is already registered', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/auth/signup').send(utils.user);
     expect(status).toBeNumber().toEqual(406);
-    expect(error).toBeObject().toContainKeys(['message', 'status']);
-    expect(error.message).toBeString().toEqual('User already exists with either email or username, please sign in');
+    // expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error).toBeString().toEqual('User already exists with either email or username, please sign in');
   });
 });
 
@@ -114,8 +109,8 @@ describe('User should be able to login to the app', () => {
   it('Should NOT create a User at "/api/v1/auth/signup" if user or password fields are invalid', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/auth/login');
     expect(status).toBeNumber().toEqual(400);
-    expect(error).toBeObject().toContainKeys(['messages', 'status']);
-    expect(error.messages).toBeArray().toIncludeAllMembers([
+    // expect(error).toBeObject().toContainKeys(['messages', 'status']);
+    expect(error).toBeArray().toIncludeAllMembers([
       {
         msg: 'Email or username should be at least a character long',
         param: 'user',
@@ -152,15 +147,15 @@ describe('User should be able to login to the app', () => {
   it('Should NOT login a User at "/api/v1/auth/login" if user is not registered', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user404.email || utils.user404.username, password: utils.user404.password });
     expect(status).toBeNumber().toEqual(404);
-    expect(error).toBeObject().toContainKeys(['message', 'status']);
-    expect(error.message).toBeString().toEqual('User not found, please sign up by creating an account');
+    // expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
   });
 
   it('Should NOT login a User at "/api/v1/auth/login" if password is wrong', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.username || utils.user.email, password: 'wrong password' });
     expect(status).toBeNumber().toEqual(401);
-    expect(error).toBeObject().toContainKeys(['message', 'status']);
-    expect(error.message).toBeString().toEqual('Password provided does not match user');
+    // expect(error).toBeObject().toContainKeys(['message', 'status']);
+    expect(error).toBeString().toEqual('Password provided does not match user');
   });
 });
 
@@ -173,8 +168,8 @@ describe('User should be able to logout after signup or login', () => {
 });
 
 describe('Authorized user should be able to get profile info', () => {
-  it('Should be able logout a User at "/api/v1/auth/logout"', async () => {
-    const { status, body: { data } } = await request(app).get('/api/v1/auth/profile')
+  it('Should be able logout a User at "/api/v1/users/profile"', async () => {
+    const { status, body: { data } } = await request(app).get('/api/v1/users/profile')
       .set('Cookie', `token=${utils.token}`);
     expect(status).toBeNumber().toEqual(200);
     expect(data).toBeObject().toContainKeys(['fullName', 'username', 'email', 'type', 'createdAt', 'updatedAt', 'Entries']);
