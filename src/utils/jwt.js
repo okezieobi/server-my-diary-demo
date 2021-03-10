@@ -6,12 +6,12 @@ export default class JWT {
   static generate({ id }) {
     return jwt.sign({
       id,
-    }, env.jwtSecret, {
+    }, env.jwtSecret || '', {
       expiresIn: 24 * 60 * 60,
     });
   }
 
   static verify({ token }) {
-    return jwt.verify(token, env.jwtSecret);
+    return jwt.verify(token, env.jwtSecret || '');
   }
 }

@@ -25,7 +25,6 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "cookie-parser": "~1.4.4",
-    "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
@@ -35,7 +34,6 @@
     "morgan": "~1.9.1",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
-    "regenerator-runtime": "^0.13.7",
     "sequelize": "^6.3.5",
     "swagger-jsdoc": "^4.0.0",
     "swagger-ui-express": "^4.1.4"
@@ -46,16 +44,18 @@
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/register": "^7.11.5",
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/jest": "^26.0.20",
     "coveralls": "^3.1.0",
     "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^24.1.8",
     "jest": "^26.4.2",
     "jest-chain": "^1.1.5",
     "jest-extended": "^0.11.5",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.2.0",
-    "superagent": "^6.1.0",
     "supertest": "^4.0.2"
   }
 }

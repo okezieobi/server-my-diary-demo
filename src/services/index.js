@@ -1,9 +1,16 @@
-import models from '../models';
 import UserServices from './user';
 import EntryServices from './entry';
 
-const user = new UserServices(models);
-const entry = new EntryServices(models);
+import db from '../models';
+
+const {
+  User, Entry, Sequelize, sequelize,
+} = db;
+
+const user = new UserServices({
+  User, Entry, Sequelize, sequelize,
+});
+const entry = new EntryServices({ Entry, Sequelize, sequelize });
 
 export default {
   user, entry,
