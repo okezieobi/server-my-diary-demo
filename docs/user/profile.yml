@@ -1,5 +1,5 @@
 paths:
-  /auth/profile/:                # path of the user from your endpoint
+  /users/profile/:                # path of the user from your endpoint
     get:                 # endpoint request type (post request)
       tags:               # Tag property
         - User            # Value of the tag
