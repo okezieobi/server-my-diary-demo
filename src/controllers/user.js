@@ -9,7 +9,7 @@ export default class UserController {
     this.getUser = this.getUser.bind(this);
     this.setJWT = (req, res, next) => {
       const token = jwt.generate(res.locals.data.user);
-      res.cookie('token', token, { sameSite: 'none' });
+      res.cookie('token', token);
       next();
     };
     this.logout = (req, res, next) => {
