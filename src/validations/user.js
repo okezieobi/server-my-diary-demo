@@ -91,10 +91,10 @@ export default class UserSchemas {
 
     this.validateJWT = checkSchema({
       token: {
+        in: ['cookies'],
         isJWT: {
           errorMessage: 'Token does not match Json Web Token format',
         },
-        in: ['cookies'],
         isString: {
           errorMessage: 'Token must be string data type',
         },
