@@ -11,7 +11,7 @@ export default class UserController {
       const token = jwt.generate(res.locals.data.user);
       res.cookie('token', token, {
         secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       });
       next();
     };
