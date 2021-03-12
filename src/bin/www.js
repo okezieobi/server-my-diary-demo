@@ -5,7 +5,7 @@
  * Module dependencies.
  */
 import debugLogger from 'debug';
-import http from 'http';
+import http from 'https';
 
 import app from '../app';
 
