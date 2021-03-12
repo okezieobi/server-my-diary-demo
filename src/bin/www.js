@@ -5,7 +5,8 @@
  * Module dependencies.
  */
 import debugLogger from 'debug';
-import { createServer } from 'http';
+import http from 'http';
+import https from 'https';
 
 import app from '../app';
 
@@ -42,7 +43,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-const server = createServer(app);
+const server = process.env.NODE_ENV === 'production' ? https.createServer(app) : http.createServer(app);
 
 /**
  * Event listener for HTTP server "error" event.

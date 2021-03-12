@@ -9,12 +9,15 @@ export default class UserController {
     this.getUser = this.getUser.bind(this);
     this.setJWT = (req, res, next) => {
       const token = jwt.generate(res.locals.data.user);
-      res.cookie('token', token, { httpOnly: true });
+      res.cookie('token', token, {
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production',
+      });
       next();
     };
     this.logout = (req, res, next) => {
       res.locals.data = {};
-      res.cookie('token', null);
+      res.clearCookie('token');
       next();
     };
   }

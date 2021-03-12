@@ -33,8 +33,8 @@ export default class EntryController {
 
   updateOne({ body: { title, body } }, res, next) {
     this.service.updateOne({
-      title: title || res.locals.data.entity.title,
-      body: body || res.locals.data.entity.body,
+      title: title || res.locals.data.entry.title,
+      body: body || res.locals.data.entry.body,
       UserId: res.locals.user.id,
       id: res.locals.data.entry.id,
     }).then((data) => {
