@@ -20,8 +20,8 @@
     "coverage": "npm run test -- '--coverage'",
     "coverage:coveralls": "npm run coverage && coveralls < coverage/lcov.info",
     "coverage:codacy": "npm run coverage && cp -R coverage .github/workflows/coverage/",
-    "migrate": "npx sequelize-cli db:migrate",
-    "migrate:undo": "npx sequelize-cli db:migrate:undo:all",
+    "migrate": "PGSSLMODE=no-verify npx sequelize-cli db:migrate",
+    "migrate:undo": "PGSSLMODE=no-verify npx sequelize-cli db:migrate:undo:all",
     "migration-skeleton:user": "NODE_ENV=test npx sequelize-cli migration:generate --name User",
     "migration-skeleton:entry": "NODE_ENV=test npx sequelize-cli migration:generate --name Entry"
   },
