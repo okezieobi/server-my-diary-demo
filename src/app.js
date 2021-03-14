@@ -8,6 +8,7 @@ import swaggerSpec from './utils/swagger';
 
 const app = express();
 
+app.enable('trust proxy');
 app.use(cors({ origin: ['https://diary-app-demo.netlify.app'], credentials: true }));
 app.use(logger('dev'));
 app.use(json());
