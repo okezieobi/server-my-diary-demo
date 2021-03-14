@@ -34,13 +34,11 @@ Object.keys(db).forEach((modelName) => {
 });
 
 (async () => {
-  if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'production') {
-    await sequelize.authenticate();
-    // no sequelize.sync(); use migrations after writing db for production
-  } else {
+  if (process.env.NODE_ENV === 'development') {
     await sequelize.authenticate().then(async () => {
       await sequelize.sync({ force: true, match: /dev$/ });
       console.log('Database connection attempt and model update successful');
+    // no sequelize.sync(); use migrations after writing db for production
     });
   }
 })();
