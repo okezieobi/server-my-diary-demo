@@ -6,7 +6,6 @@
  */
 import debugLogger from 'debug';
 import http from 'http';
-import https from 'https';
 
 import app from '../app';
 
@@ -43,7 +42,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-const server = process.env.NODE_ENV === 'production' ? https.createServer(app) : http.createServer(app);
+const server = http.createServer(app);
 
 /**
  * Event listener for HTTP server "error" event.
