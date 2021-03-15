@@ -28,12 +28,11 @@ export default class UserController {
     return this.handleServices(this.service, 'auth', body, res, next);
   }
 
-  findById({ cookies }, res, next) {
+  async findById({ cookies }, res, next) {
     const decoded = jwt.verify(cookies);
-    this.service.authJWT(decoded).then((user) => {
-      res.locals.user = user;
-      next();
-    }).catch(next);
+    const user = await this.service.authJWT(decoded).catch(next);
+    res.locals.user = user;
+    next();
   }
 
   getUser(req, res, next) {
