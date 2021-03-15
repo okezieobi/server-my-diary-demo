@@ -7,8 +7,7 @@ import { Sequelize, DataTypes } from 'sequelize';
 import env from '../utils/env';
 
 const basename = path.basename(__filename);
-// @ts-ignore
-const sequelize = new Sequelize(env.databaseURL || '', { ssl: { rejectUnauthorized: false }, dialect: 'postgres', logging: false });
+const sequelize = new Sequelize(env.databaseURL || '', { dialect: 'postgres', logging: false });
 // pass your sequelize config here
 
 // Run `.associate` if it exists,
