@@ -13,11 +13,6 @@ export default class EntryController {
   }
 
   findAll(req, res, next) {
-    this.service.findByOwner(res.locals.user.id)
-      .then((data) => {
-        res.locals.data = data;
-        next();
-      }).catch(next);
     return this.handleServices(this.service, 'findByOwner', res.locals.user.id, res, next);
   }
 
