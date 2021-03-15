@@ -7,7 +7,7 @@ import { Sequelize, DataTypes } from 'sequelize';
 import env from '../utils/env';
 
 const basename = path.basename(__filename);
-const sequelize = new Sequelize(env.databaseURL || '', { ssl: true, dialect: 'postgres', logging: false });
+const sequelize = new Sequelize(env.databaseURL || '', { dialect: 'postgres', logging: false });
 // pass your sequelize config here
 
 // Run `.associate` if it exists,
@@ -33,15 +33,13 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-(async () => {
-  if (process.env.NODE_ENV === 'development') {
-    await sequelize.authenticate().then(async () => {
-      await sequelize.sync({ force: true, match: /dev$/ });
-      console.log('Database connection attempt and model update successful');
+if (process.env.NODE_ENV === 'development') {
+  (async () => {
+    await sequelize.authenticate();
+    await sequelize.sync({ force: true, match: /dev$/ });
     // no sequelize.sync(); use migrations after writing db for production
-    });
-  }
-})();
+  })().catch((err) => console.error(err));
+}
 
 db.tables.modelTimestamps = (SequelizeDataTypes) => ({
   createdAt: {
