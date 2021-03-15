@@ -1,12 +1,13 @@
 import jwt from '../utils/jwt';
 
 export default class UserController {
-  constructor({ user }) {
+  constructor({ user }, handleServices) {
     this.service = user;
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
     this.findById = this.findById.bind(this);
     this.getUser = this.getUser.bind(this);
+    this.handleServices = handleServices;
     this.setJWT = (req, res, next) => {
       const token = jwt.generate(res.locals.data.user);
       res.cookie('token', token);
@@ -20,19 +21,11 @@ export default class UserController {
   }
 
   signup({ body }, res, next) {
-    this.service.create(body)
-      .then((data) => {
-        res.locals.data = data;
-        next();
-      }).catch(next);
+    return this.handleServices(this.service, 'create', body, res, next);
   }
 
   login({ body }, res, next) {
-    this.service.auth(body)
-      .then((data) => {
-        res.locals.data = data;
-        next();
-      }).catch(next);
+    return this.handleServices(this.service, 'auth', body, res, next);
   }
 
   findById({ cookies }, res, next) {
@@ -44,10 +37,6 @@ export default class UserController {
   }
 
   getUser(req, res, next) {
-    this.service.getUser(res.locals.user.id)
-      .then((data) => {
-        res.locals.data = data;
-        next();
-      }).catch(next);
+    return this.handleServices(this.service, 'getUser', res.locals.user.id, res, next);
   }
 }

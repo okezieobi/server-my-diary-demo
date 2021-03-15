@@ -1,18 +1,15 @@
 export default class EntryController {
-  constructor({ entry }) {
+  constructor({ entry }, handleServices) {
     this.service = entry;
     this.createOne = this.createOne.bind(this);
     this.findAll = this.findAll.bind(this);
     this.updateOne = this.updateOne.bind(this);
     this.findOneById = this.findOneById.bind(this);
+    this.handleServices = handleServices;
   }
 
   createOne({ body: { title, body } }, res, next) {
-    this.service.create({ title, body, UserId: res.locals.user.id })
-      .then((data) => {
-        res.locals.data = data;
-        next();
-      }).catch(next);
+    return this.handleServices(this.service, 'create', { title, body, UserId: res.locals.user.id }, res, next);
   }
 
   findAll(req, res, next) {
@@ -21,25 +18,20 @@ export default class EntryController {
         res.locals.data = data;
         next();
       }).catch(next);
+    return this.handleServices(this.service, 'findByOwner', res.locals.user.id, res, next);
   }
 
   findOneById({ params: { id } }, res, next) {
-    this.service.findOneByOwner({ UserId: res.locals.user.id, id })
-      .then((data) => {
-        res.locals.data = data;
-        next();
-      }).catch(next);
+    return this.handleServices(this.service, 'findOneByOwner', { UserId: res.locals.user.id, id }, res, next);
   }
 
   updateOne({ body: { title, body } }, res, next) {
-    this.service.updateOne({
+    const input = {
       title: title || res.locals.data.entry.title,
       body: body || res.locals.data.entry.body,
       UserId: res.locals.user.id,
       id: res.locals.data.entry.id,
-    }).then((data) => {
-      res.locals.data = data;
-      next();
-    }).catch(next);
+    };
+    return this.handleServices(this.service, 'updateOne', input, res, next);
   }
 }
