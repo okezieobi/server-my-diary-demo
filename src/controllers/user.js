@@ -5,19 +5,11 @@ export default class UserController {
     this.service = user;
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
-    this.findById = this.findById.bind(this);
+    this.authJWT = this.authJWT.bind(this);
     this.getUser = this.getUser.bind(this);
+    this.setJWT = this.setJWT.bind(this);
+    this.logout = this.logout.bind(this);
     this.handleServices = handleServices;
-    this.setJWT = (req, res, next) => {
-      const token = jwt.generate(res.locals.data.user);
-      res.cookie('token', token, { httpOnly: true });
-      next();
-    };
-    this.logout = (req, res, next) => {
-      res.locals.data = {};
-      res.clearCookie('token');
-      next();
-    };
   }
 
   signup({ body }, res, next) {
@@ -28,10 +20,26 @@ export default class UserController {
     return this.handleServices(this.service, 'auth', body, res, next);
   }
 
-  async findById({ cookies }, res, next) {
-    const decoded = jwt.verify(cookies);
+  async logout(req, res, next) {
+    await this.service.delete(res.locals.token.jti).catch(next);
+    res.locals.data = {};
+    next();
+  }
+
+  async authJWT({ headers: authorization }, res, next) {
+    const decoded = jwt.verify(authorization);
     const user = await this.service.authJWT(decoded).catch(next);
     res.locals.user = user;
+    next();
+  }
+
+  async setJWT(req, res, next) {
+    const iss = `${req.protocol}://${req.get('host')}`;
+    const sub = res.locals.data.user.id;
+    const scope = 'self';
+    const { token, signingKey, tokenId } = jwt.generate(iss, sub, scope);
+    await this.service.saveJWT(tokenId, signingKey).catch(next);
+    res.locals.data.user.token = token;
     next();
   }
 

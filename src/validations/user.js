@@ -90,8 +90,8 @@ export default class UserSchemas {
     });
 
     this.validateJWT = checkSchema({
-      token: {
-        in: ['cookies'],
+      authorization: {
+        in: ['headers'],
         isJWT: {
           errorMessage: 'Token does not match Json Web Token format',
         },

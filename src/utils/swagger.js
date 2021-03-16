@@ -16,8 +16,8 @@ const swaggerDefinition = {
     securitySchemes: {
       ApiKeyAuth: {
         type: 'apiKey',
-        in: 'cookie',
-        name: 'token',
+        in: 'header',
+        name: 'authorization',
       },
     },
   },
@@ -29,7 +29,6 @@ const options = {
   swaggerDefinition,
   // path to the API docs
   apis: ['./docs/**/*.yml'],
-  withCredentials: true,
 };
 // initialize swagger-jsdoc
 export default {

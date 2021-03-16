@@ -8,7 +8,7 @@ export default (Router) => {
 
   const handleResponse = (req, res) => {
     res.status(res.locals.data.status || 200)
-      .send({ data: res.locals.data || {} });
+      .send({ data: res.locals.data });
   };
 
   router.use('/auth', authRoutes(Router, handleResponse, middleware));

@@ -2,10 +2,11 @@ import CustomError from './error';
 
 export default class UserServices {
   constructor({
-    User, Entry, sequelize, Sequelize,
+    User, Entry, sequelize, Sequelize, JWT,
   }) {
     this.model = User;
     this.entryModel = Entry;
+    this.jwtModel = JWT;
     this.sequelize = sequelize;
     this.Sequelize = Sequelize;
   }
@@ -20,7 +21,7 @@ export default class UserServices {
         },
         transaction: t,
       });
-      if (userExists) throw new CustomError(406, 'User already exists with either email or username, please sign in');
+      if (userExists) throw new CustomError(406, `Account already exists with either email ${arg.email} or username ${arg.username}, please sign in or sign up with a different email or username`);
       else {
         await this.model.create(arg, { transaction: t });
         const user = await this.model.findOne({
@@ -52,7 +53,7 @@ export default class UserServices {
       if (user) {
         const verifyPassword = await this.model.compareString(user.password, arg.password);
         if (!verifyPassword) throw new CustomError(401, 'Password provided does not match user');
-      } else throw new CustomError(404, 'User not found, please sign up by creating an account');
+      } else throw new CustomError(404, `Account with ${user} does not exist, please sign up by creating an account`);
       return { user };
     });
   }
@@ -68,6 +69,22 @@ export default class UserServices {
       if (user === null) throw new CustomError(401, 'User not found, please sign up by creating an account');
       return user;
     });
+  }
+
+  async saveJwt(id, key) {
+    return this.sequelize.transaction(async (t) => this.model.create({
+      tokenId: id,
+      tokenSigningKey: key,
+    }, { transaction: t }));
+  }
+
+  async deleteJwt(id) {
+    return this.sequelize.transaction(async (t) => this.model.destroy({
+      where: {
+        tokenId: id,
+      },
+      transaction: t,
+    }));
   }
 
   async getUser(arg) {
