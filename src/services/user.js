@@ -42,7 +42,7 @@ export default class UserServices {
 
   async auth(arg) {
     return this.sequelize.transaction(async (t) => {
-      const user = await this.model.findOne({
+      const userExists = await this.model.findOne({
         where: {
           [this.Sequelize.Op.or]: [
             { email: arg.user }, { username: arg.user },
@@ -50,17 +50,35 @@ export default class UserServices {
         },
         transaction: t,
       });
-      if (user) {
-        const verifyPassword = await this.model.compareString(user.password, arg.password);
+      if (userExists) {
+        const verifyPassword = await this.model.compareString(userExists.password, arg.password);
         if (!verifyPassword) throw new CustomError(401, 'Password provided does not match user');
-      } else throw new CustomError(404, `Account with ${user} does not exist, please sign up by creating an account`);
+      } else throw new CustomError(404, `Account with ${userExists} does not exist, please sign up by creating an account`);
+      const user = await this.model.findOne({
+        where: {
+          [this.Sequelize.Op.or]: [
+            { email: arg.user }, { username: arg.user },
+          ],
+        },
+        transaction: t,
+        attributes: {
+          exclude: ['password'],
+        },
+      });
       return { user };
     });
   }
 
-  async authJWT({ id }) {
+  async authJWT(userId, tokenId) {
     return this.sequelize.transaction(async (t) => {
-      const user = await this.model.findByPk(id, {
+      const tokenIsValid = await this.jwtModel.findOne(tokenId, {
+        where: {
+          tokenId,
+        },
+        transaction: t,
+      });
+      if (tokenIsValid === null) throw new Error('Token blacklisted');
+      const user = await this.model.findByPk(userId, {
         transaction: t,
         attributes: {
           exclude: ['password'],
@@ -71,20 +89,25 @@ export default class UserServices {
     });
   }
 
-  async saveJwt(id, key) {
-    return this.sequelize.transaction(async (t) => this.model.create({
-      tokenId: id,
-      tokenSigningKey: key,
+  async saveJWT(tokenId, key, keyId) {
+    return this.sequelize.transaction(async (t) => this.jwtModel.create({
+      tokenId,
+      key,
+      keyId,
     }, { transaction: t }));
   }
 
-  async deleteJwt(id) {
-    return this.sequelize.transaction(async (t) => this.model.destroy({
+  async deleteJWT(tokenId) {
+    return this.sequelize.transaction(async (t) => this.jwtModel.destroy({
       where: {
-        tokenId: id,
+        tokenId,
       },
       transaction: t,
     }));
+  }
+
+  async getSigningKeys() {
+    return this.sequelize.transaction(async (t) => this.jwtModel.findAll({ transaction: t }));
   }
 
   async getUser(arg) {

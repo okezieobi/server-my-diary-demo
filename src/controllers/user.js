@@ -21,14 +21,15 @@ export default class UserController {
   }
 
   async logout(req, res, next) {
-    await this.service.delete(res.locals.token.jti).catch(next);
+    await this.service.deleteJWT(res.locals.token.jti).catch(next);
     res.locals.data = {};
     next();
   }
 
   async authJWT({ headers: authorization }, res, next) {
-    const decoded = jwt.verify(authorization);
-    const user = await this.service.authJWT(decoded).catch(next);
+    const keys = await this.service.getSigningKeys().catch(next);
+    const { body: { sub, jti } } = jwt.verify(authorization, keys).catch(next);
+    const user = await this.service.authJWT(sub, jti).catch(next);
     res.locals.user = user;
     next();
   }
@@ -36,10 +37,11 @@ export default class UserController {
   async setJWT(req, res, next) {
     const iss = `${req.protocol}://${req.get('host')}`;
     const sub = res.locals.data.user.id;
-    const scope = 'self';
-    const { token, signingKey, tokenId } = jwt.generate(iss, sub, scope);
-    await this.service.saveJWT(tokenId, signingKey).catch(next);
-    res.locals.data.user.token = token;
+    const {
+      token, signingKey, keyId, tokenId,
+    } = jwt.generate(iss, sub);
+    await this.service.saveJWT(tokenId, signingKey, keyId).catch(next);
+    res.locals.data.token = token;
     next();
   }
 

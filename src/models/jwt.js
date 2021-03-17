@@ -11,7 +11,13 @@ module.exports = (sequelize, SequelizeDatatype) => {
       notEmpty: true,
       unique: true,
     },
-    tokenSigningKey: {
+    key: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      notEmpty: true,
+      unique: true,
+    },
+    keyId: {
       type: DataTypes.TEXT,
       allowNull: false,
       notEmpty: true,
@@ -19,7 +25,7 @@ module.exports = (sequelize, SequelizeDatatype) => {
     },
   });
 
-  const model = sequelize.define('JWTs', table(SequelizeDatatype));
+  const model = sequelize.define('JWT', table(SequelizeDatatype));
 
   return { model, table };
 };
