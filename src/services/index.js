@@ -4,11 +4,11 @@ import EntryServices from './entry';
 import db from '../models';
 
 const {
-  User, Entry, Sequelize, sequelize, JWT,
+  User, Entry, Sequelize, sequelize,
 } = db;
 
 const user = new UserServices({
-  User, Entry, Sequelize, sequelize, JWT,
+  User, Entry, Sequelize, sequelize,
 });
 const entry = new EntryServices({ Entry, Sequelize, sequelize });
 

@@ -2,11 +2,10 @@ import CustomError from './error';
 
 export default class UserServices {
   constructor({
-    User, Entry, sequelize, Sequelize, JWT,
+    User, Entry, sequelize, Sequelize,
   }) {
     this.model = User;
     this.entryModel = Entry;
-    this.jwtModel = JWT;
     this.sequelize = sequelize;
     this.Sequelize = Sequelize;
   }
@@ -69,45 +68,17 @@ export default class UserServices {
     });
   }
 
-  async authJWT(userId, tokenId) {
+  async authJWT({ id }) {
     return this.sequelize.transaction(async (t) => {
-      const tokenIsValid = await this.jwtModel.findOne(tokenId, {
-        where: {
-          tokenId,
-        },
-        transaction: t,
-      });
-      if (tokenIsValid === null) throw new Error('Token blacklisted');
-      const user = await this.model.findByPk(userId, {
+      const user = await this.model.findByPk(id, {
         transaction: t,
         attributes: {
           exclude: ['password'],
         },
       });
-      if (user === null) throw new CustomError(401, 'User not found, please sign up by creating an account');
+      if (!user) throw new CustomError(401, 'User not found, please sign up by creating an account');
       return user;
     });
-  }
-
-  async saveJWT(tokenId, key, keyId) {
-    return this.sequelize.transaction(async (t) => this.jwtModel.create({
-      tokenId,
-      key,
-      keyId,
-    }, { transaction: t }));
-  }
-
-  async deleteJWT(tokenId) {
-    return this.sequelize.transaction(async (t) => this.jwtModel.destroy({
-      where: {
-        tokenId,
-      },
-      transaction: t,
-    }));
-  }
-
-  async getSigningKeys() {
-    return this.sequelize.transaction(async (t) => this.jwtModel.findAll({ transaction: t }));
   }
 
   async getUser(arg) {

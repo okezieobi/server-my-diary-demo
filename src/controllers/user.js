@@ -7,8 +7,20 @@ export default class UserController {
     this.signup = this.signup.bind(this);
     this.authJWT = this.authJWT.bind(this);
     this.getUser = this.getUser.bind(this);
-    this.setJWT = this.setJWT.bind(this);
-    this.logout = this.logout.bind(this);
+    this.logout = (req, res, next) => {
+      res.locals.data = {};
+      res.clearCookie('authorization');
+      next();
+    };
+    this.setJWT = async (req, res, next) => {
+      const token = await jwt.generate(res.locals.data.user).catch(next);
+      res.cookie('authorization', token, {
+        httpOnly: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      });
+      next();
+    };
     this.handleServices = handleServices;
   }
 
@@ -20,28 +32,12 @@ export default class UserController {
     return this.handleServices(this.service, 'auth', body, res, next);
   }
 
-  async logout(req, res, next) {
-    await this.service.deleteJWT(res.locals.token.jti).catch(next);
-    res.locals.data = {};
-    next();
-  }
-
-  async authJWT({ headers: authorization }, res, next) {
-    const keys = await this.service.getSigningKeys().catch(next);
-    const { body: { sub, jti } } = jwt.verify(authorization, keys).catch(next);
-    const user = await this.service.authJWT(sub, jti).catch(next);
-    res.locals.user = user;
-    next();
-  }
-
-  async setJWT(req, res, next) {
-    const iss = `${req.protocol}://${req.get('host')}`;
-    const sub = res.locals.data.user.id;
-    const {
-      token, signingKey, keyId, tokenId,
-    } = jwt.generate(iss, sub);
-    await this.service.saveJWT(tokenId, signingKey, keyId).catch(next);
-    res.locals.data.token = token;
+  async authJWT({ cookies }, res, next) {
+    const decoded = await jwt.verify(cookies).catch((err) => {
+      if (process.env.NODE_ENV === 'production') next({ status: 401, message: err.message });
+      else next(err);
+    });
+    res.locals.user = await this.service.authJWT(decoded).catch(next);
     next();
   }
 
