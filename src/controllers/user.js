@@ -7,15 +7,8 @@ export default class UserController {
     this.signup = this.signup.bind(this);
     this.authJWT = this.authJWT.bind(this);
     this.getUser = this.getUser.bind(this);
-    this.logout = (req, res, next) => {
-      res.locals.data = {};
-      res.clearCookie('authorization');
-      next();
-    };
     this.setJWT = async (req, res, next) => {
-      const token = await jwt.generate(res.locals.data.user);
-      const cookieOptions = process.env.NODE_ENV === 'production' ? { httpOnly: true, sameSite: 'none', secure: true } : { httpOnly: true };
-      res.cookie('authorization', token, cookieOptions);
+      res.locals.data.token = await jwt.generate(res.locals.data.user);
       next();
     };
     this.handleServices = handleServices;
@@ -29,8 +22,8 @@ export default class UserController {
     return this.handleServices(this.service, 'auth', body, res, next);
   }
 
-  async authJWT({ cookies }, res, next) {
-    const decoded = await jwt.verify(cookies).catch((err) => {
+  async authJWT({ headers }, res, next) {
+    const decoded = await jwt.verify(headers).catch((err) => {
       if (process.env.NODE_ENV === 'development') throw err;
       else next({ status: 401, message: err.message });
     });

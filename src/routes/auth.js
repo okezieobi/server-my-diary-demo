@@ -1,6 +1,6 @@
 export default (Router, handleResponse, {
   user: {
-    signup, login, logout,
+    signup, login,
   },
 }) => {
   const router = Router();
@@ -8,8 +8,6 @@ export default (Router, handleResponse, {
   router.post('/signup', signup, handleResponse);
 
   router.post('/login', login, handleResponse);
-
-  router.post('/logout', logout, handleResponse);
 
   return router;
 };

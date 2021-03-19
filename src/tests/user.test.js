@@ -167,12 +167,4 @@ describe('Authorized user should be able to get profile info', () => {
     expect(data.updatedAt).toBeString();
     expect(data.Entries).toBeArray();
   });
-
-  describe('User should be able to logout after signup or login', () => {
-    it('Should be able to logout a user at "/api/v1/auth/logout"', async () => {
-      const { status } = await request(app).post('/api/v1/auth/logout')
-        .set('Cookie', `token=${utils.token}`);
-      expect(status).toBeNumber().toEqual(200);
-    });
-  });
 });
