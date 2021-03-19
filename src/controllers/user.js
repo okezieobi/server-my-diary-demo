@@ -17,7 +17,7 @@ export default class UserController {
       res.cookie('authorization', token, {
         httpOnly: process.env.NODE_ENV === 'production',
         secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
       });
       next();
     };
