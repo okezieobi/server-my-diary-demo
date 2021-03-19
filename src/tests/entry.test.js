@@ -6,7 +6,8 @@ import utils from './utils';
 describe('Authenticated User should be able to create an entry', () => {
   it('Should be able to create a diary entry at "/api/v1/entries" if all required input fields are valid', async () => {
     const { status, body: { data } } = await request(app).post('/api/v1/entries')
-      .set('Cookie', `authorization=${utils.token}`).send(utils.entry);
+      .set('authorization', utils.token)
+      .send(utils.entry);
     expect(status).toBeNumber().toEqual(201);
     expect(data).toBeObject().toContainKeys(['entry', 'status']);
     expect(data.status).toBeNumber().toEqual(201);
@@ -20,7 +21,7 @@ describe('Authenticated User should be able to create an entry', () => {
 
   it('Should not create an entry at "/api/v1/entries" if input fields are invalid', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/entries')
-      .set('Cookie', `authorization=${utils.token}`);
+      .set('authorization', utils.token);
     expect(status).toBeNumber().toEqual(400);
     expect(error).toBeArray().toIncludeAllMembers([
       {
@@ -64,24 +65,25 @@ describe('Authenticated User should be able to create an entry', () => {
       {
         msg: 'Token must be string data type',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
       {
         msg: 'Token does not match Json Web Token format',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
       {
         msg: 'Token is required',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
     ]);
   });
 
   it('Should NOT create an entry at at "/api/v1/entries" if User is not authenticated', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/entries')
-      .set('Cookie', `authorization=${utils.token401}`).send(utils.entry);
+      .set('authorization', utils.token401)
+      .send(utils.entry);
     expect(status).toBeNumber().toEqual(401);
     expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
   });
@@ -90,7 +92,7 @@ describe('Authenticated User should be able to create an entry', () => {
 describe('Authenticated User should be able to get all associated entries', () => {
   it('Should get all associated entities at "/api/v1/entities" if input all required fields are valid', async () => {
     const { status, body: { data } } = await request(app).get('/api/v1/entries')
-      .set('Cookie', `authorization=${utils.token}`);
+      .set('authorization', utils.token);
     expect(status).toBeNumber().toEqual(200);
     expect(data).toBeObject().toContainKeys(['entries']);
     expect(data.entries).toBeArray();
@@ -103,24 +105,24 @@ describe('Authenticated User should be able to get all associated entries', () =
       {
         msg: 'Token must be string data type',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
       {
         msg: 'Token does not match Json Web Token format',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
       {
         msg: 'Token is required',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
     ]);
   });
 
   it('Should NOT get all associated entries at at "/api/v1/entries" if User is not authenticated', async () => {
     const { status, body: { error } } = await request(app).get('/api/v1/entries')
-      .set('Cookie', `authorization=${utils.token401}`);
+      .set('authorization', utils.token401);
     expect(status).toBeNumber().toEqual(401);
     expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
   });
@@ -129,7 +131,7 @@ describe('Authenticated User should be able to get all associated entries', () =
 describe('Authenticated User can get an associated, specific entry by its id', () => {
   it('Should get a specific entity at "/api/v1/entries/:id" by its id', async () => {
     const { status, body: { data } } = await request(app).get(`/api/v1/entries/${utils.seed.entryDAO.id}`)
-      .set('Cookie', `authorization=${utils.token}`);
+      .set('authorization', utils.token);
     expect(status).toBeNumber().toEqual(200);
     expect(data).toBeObject().toContainKeys(['entry']);
     expect(data.entry.title).toBeString().toEqual(utils.entry.title);
@@ -147,31 +149,31 @@ describe('Authenticated User can get an associated, specific entry by its id', (
       {
         msg: 'Token must be string data type',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
       {
         msg: 'Token does not match Json Web Token format',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
       {
         msg: 'Token is required',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
     ]);
   });
 
   it('Should NOT get associated, specific entry at at "/api/v1/entries/:id" if User is not authenticated', async () => {
     const { status, body: { error } } = await request(app).get(`/api/v1/entries/${utils.seed.entryDAO.id}`)
-      .set('Cookie', `authorization=${utils.token401}`);
+      .set('authorization', utils.token401);
     expect(status).toBeNumber().toEqual(401);
     expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
   });
 
   it('Should NOT get associated, specific entry at at "/api/v1/entries/:id" if entry does not exist', async () => {
     const { status, body: { error } } = await request(app).get(`/api/v1/entries/${utils.user404DAO.id}`)
-      .set('Cookie', `authorization=${utils.token}`);
+      .set('authorization', utils.token);
     expect(status).toBeNumber().toEqual(404);
     expect(error).toBeString().toEqual('Entry not found');
   });
@@ -180,7 +182,7 @@ describe('Authenticated User can get an associated, specific entry by its id', (
 describe('Authenticated User can update an associated, specific entry by its id', () => {
   it('Should update a specific entry at "/api/v1/entries:id" if all input fields are valid', async () => {
     const { status, body: { data } } = await request(app).put(`/api/v1/entries/${utils.seed.entryDAO.id}`)
-      .set('Cookie', `authorization=${utils.token}`).send(utils.entry);
+      .set('authorization', utils.token).send(utils.entry);
     expect(status).toBeNumber().toEqual(200);
     expect(data).toBeObject().toContainKeys(['entry']);
     expect(data.entry.title).toBeString().toEqual(utils.entry.title);
@@ -194,7 +196,7 @@ describe('Authenticated User can update an associated, specific entry by its id'
   // preceding tests is taken into account
   it('Should not update a specific entry at "/api/v1/entries:id" even if input fields are invalid', async () => {
     const { status, body: { data } } = await request(app).put(`/api/v1/entries/${utils.seed.entryDAO.id}`)
-      .set('Cookie', `authorization=${utils.token}`).send(utils.entry);
+      .set('authorization', utils.token).send(utils.entry);
     expect(status).toBeNumber().toEqual(200);
     expect(data).toBeObject().toContainKeys(['entry']);
     expect(data.entry.title).toBeString().toEqual(utils.entry.title);
@@ -213,31 +215,31 @@ describe('Authenticated User can update an associated, specific entry by its id'
       {
         msg: 'Token must be string data type',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
       {
         msg: 'Token does not match Json Web Token format',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
       {
         msg: 'Token is required',
         param: 'authorization',
-        location: 'cookies',
+        location: 'headers',
       },
     ]);
   });
 
   it('Should NOT update associated, specific entry at at "/api/v1/entries/:id" if User is not authenticated', async () => {
     const { status, body: { error } } = await request(app).put(`/api/v1/entries/${utils.seed.entryDAO.id}`)
-      .set('Cookie', `authorization=${utils.token401}`);
+      .set('authorization', utils.token401);
     expect(status).toBeNumber().toEqual(401);
     expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
   });
 
   it('Should NOT update associated, specific entry at at "/api/v1/entries/:id" if entry does not exist', async () => {
     const { status, body: { error } } = await request(app).put(`/api/v1/entries/${utils.seed.userDAO.id}`)
-      .set('Cookie', `authorization=${utils.token}`);
+      .set('authorization', utils.token);
     expect(status).toBeNumber().toEqual(404);
     expect(error).toBeString().toEqual('Entry not found');
   });

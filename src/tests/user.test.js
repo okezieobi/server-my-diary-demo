@@ -9,6 +9,7 @@ describe('User should be able to signup to the app', () => {
     expect(status).toBeNumber().toEqual(201);
     expect(data).toBeObject().toContainKeys(['user', 'status']);
     expect(data.status).toBeNumber().toEqual(201);
+    expect(data.token).toBeString();
     expect(data.user.fullName).toBeString().toEqual(utils.newUser.fullName);
     expect(data.user.username).toBeString().toEqual(utils.newUser.username);
     expect(data.user.email).toBeString().toEqual(utils.newUser.email);
@@ -94,6 +95,7 @@ describe('User should be able to login to the app', () => {
   it('Should be able login a user at "/api/v1/auth/login" if user and password fields are valid', async () => {
     const { status, body: { data } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.email || utils.user.username, password: utils.user.password });
     expect(status).toBeNumber().toEqual(200);
+    expect(data.token).toBeString();
     expect(data).toBeObject().toContainKeys(['user']);
     expect(data.user.fullName).toBeString().toEqual(utils.user.fullName);
     expect(data.user.username).toBeString().toEqual(utils.user.username);
@@ -156,7 +158,7 @@ describe('User should be able to login to the app', () => {
 describe('Authorized user should be able to get profile info', () => {
   it('Should be able  get a user details at "/api/v1/users/profile"', async () => {
     const { status, body: { data } } = await request(app).get('/api/v1/users/profile')
-      .set('Cookie', `authorization=${utils.token}`);
+      .set('authorization', utils.token);
     expect(status).toBeNumber().toEqual(200);
     expect(data).toBeObject().toContainKeys(['fullName', 'username', 'email', 'type', 'createdAt', 'updatedAt', 'Entries']);
     expect(data.fullName).toBeString().toEqual(utils.user.fullName);
