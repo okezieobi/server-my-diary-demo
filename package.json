@@ -15,7 +15,7 @@
     "clean": "rm -rf dist && mkdir dist",
     "build": "npm run clean && npm run build-app && npm run migrate",
     "build-app": "babel src -s -d dist",
-    "start": "NODE_ENV=production node dist/bin/www.js",
+    "start": "node dist/bin/www.js",
     "test": "NODE_ENV=test jest src/tests/index.test.js",
     "coverage": "npm run test -- '--coverage'",
     "coverage:coveralls": "npm run coverage && coveralls < coverage/lcov.info",
