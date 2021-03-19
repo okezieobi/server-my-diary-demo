@@ -2,7 +2,7 @@
   "name": "server-my-diary-demo",
   "version": "0.0.0",
   "engines": {
-    "node": "14.x"
+    "node": "12.x"
   },
   "private": true,
   "main": "jest.config.js",
