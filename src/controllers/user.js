@@ -13,7 +13,7 @@ export default class UserController {
       next();
     };
     this.setJWT = async (req, res, next) => {
-      const token = await jwt.generate(res.locals.data.user).catch(next);
+      const token = await jwt.generate(res.locals.data.user);
       res.cookie('authorization', token, {
         httpOnly: process.env.NODE_ENV === 'production',
         secure: process.env.NODE_ENV === 'production',
@@ -34,8 +34,8 @@ export default class UserController {
 
   async authJWT({ cookies }, res, next) {
     const decoded = await jwt.verify(cookies).catch((err) => {
-      if (process.env.NODE_ENV === 'production') next({ status: 401, message: err.message });
-      else next(err);
+      if (process.env.NODE_ENV === 'development') throw err;
+      else next({ status: 401, message: err.message });
     });
     res.locals.user = await this.service.authJWT(decoded).catch(next);
     next();

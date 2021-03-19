@@ -52,7 +52,7 @@ export default class UserServices {
       if (userExists) {
         const verifyPassword = await this.model.compareString(userExists.password, arg.password);
         if (!verifyPassword) throw new CustomError(401, 'Password provided does not match user');
-      } else throw new CustomError(404, `Account with ${userExists} does not exist, please sign up by creating an account`);
+      } else throw new CustomError(404, `Account with ${arg.user} does not exist, please sign up by creating an account`);
       const user = await this.model.findOne({
         where: {
           [this.Sequelize.Op.or]: [
@@ -76,7 +76,7 @@ export default class UserServices {
           exclude: ['password'],
         },
       });
-      if (!user) throw new CustomError(401, 'User not found, please sign up by creating an account');
+      if (user === null) throw new CustomError(401, 'User not found, please sign up by creating an account');
       return user;
     });
   }

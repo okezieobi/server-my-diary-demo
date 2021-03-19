@@ -83,15 +83,15 @@ describe('User should be able to signup to the app', () => {
     ]);
   });
 
-  it('Should NOT create a User at "/api/v1/auth/signup" if username or email is already registered', async () => {
+  it('Should NOT create a user at "/api/v1/auth/signup" if username or email is already registered', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/auth/signup').send(utils.user);
     expect(status).toBeNumber().toEqual(406);
-    expect(error).toBeString().toEqual('User already exists with either email or username, please sign in');
+    expect(error).toBeString().toEqual(`Account already exists with either email ${utils.user.email} or username ${utils.user.username}, please sign in or sign up with a different email or username`);
   });
 });
 
 describe('User should be able to login to the app', () => {
-  it('Should be able login a User at "/api/v1/auth/login" if user and password fields are valid', async () => {
+  it('Should be able login a user at "/api/v1/auth/login" if user and password fields are valid', async () => {
     const { status, body: { data } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.email || utils.user.username, password: utils.user.password });
     expect(status).toBeNumber().toEqual(200);
     expect(data).toBeObject().toContainKeys(['user']);
@@ -140,10 +140,10 @@ describe('User should be able to login to the app', () => {
     ]);
   });
 
-  it('Should NOT login a User at "/api/v1/auth/login" if user is not registered', async () => {
+  it('Should NOT login a user at "/api/v1/auth/login" if user is not registered', async () => {
     const { status, body: { error } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user404.email || utils.user404.username, password: utils.user404.password });
     expect(status).toBeNumber().toEqual(404);
-    expect(error).toBeString().toEqual('User not found, please sign up by creating an account');
+    expect(error).toBeString().toEqual(`Account with ${utils.user404.email} does not exist, please sign up by creating an account`);
   });
 
   it('Should NOT login a User at "/api/v1/auth/login" if password is wrong', async () => {
@@ -153,18 +153,10 @@ describe('User should be able to login to the app', () => {
   });
 });
 
-describe('User should be able to logout after signup or login', () => {
-  it('Should be able logout a User at "/api/v1/auth/logout"', async () => {
-    const { status } = await request(app).post('/api/v1/auth/logout')
-      .set('Cookie', `token=${utils.token}`);
-    expect(status).toBeNumber().toEqual(200);
-  });
-});
-
 describe('Authorized user should be able to get profile info', () => {
-  it('Should be able logout a User at "/api/v1/users/profile"', async () => {
+  it('Should be able  get a user details at "/api/v1/users/profile"', async () => {
     const { status, body: { data } } = await request(app).get('/api/v1/users/profile')
-      .set('Cookie', `token=${utils.token}`);
+      .set('Cookie', `authorization=${utils.token}`);
     expect(status).toBeNumber().toEqual(200);
     expect(data).toBeObject().toContainKeys(['fullName', 'username', 'email', 'type', 'createdAt', 'updatedAt', 'Entries']);
     expect(data.fullName).toBeString().toEqual(utils.user.fullName);
@@ -174,5 +166,13 @@ describe('Authorized user should be able to get profile info', () => {
     expect(data.createdAt).toBeString();
     expect(data.updatedAt).toBeString();
     expect(data.Entries).toBeArray();
+  });
+
+  describe('User should be able to logout after signup or login', () => {
+    it('Should be able to logout a user at "/api/v1/auth/logout"', async () => {
+      const { status } = await request(app).post('/api/v1/auth/logout')
+        .set('Cookie', `token=${utils.token}`);
+      expect(status).toBeNumber().toEqual(200);
+    });
   });
 });

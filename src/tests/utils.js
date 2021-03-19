@@ -1,5 +1,13 @@
+import jwt from 'jsonwebtoken';
+
 import models from '../models';
-import jwt from '../utils/jwt';
+import env from '../utils/env';
+
+const generateJWT = ({ id }) => jwt.sign({
+  id,
+}, env.jwtSecret || '', {
+  expiresIn: '6h',
+});
 
 const user = {
   fullName: 'test-fullName', username: 'test-username', email: 'test@email.com', password: 'test-password',
@@ -8,16 +16,13 @@ const newUser = {
   fullName: 'test-fullName-new', username: 'test-username-new', email: 'test-new@email.com', password: 'test-password',
 };
 const userDAO = models.User.build(user);
-// @ts-ignore
-const token = jwt.generate(userDAO);
+const token = generateJWT(userDAO);
 const user404 = {
   fullName: 'test-fullName-fake', username: 'test-username-fake', email: 'test-fake@email.com', password: 'test-password',
 };
 const user404DAO = models.User.build(user404);
-// @ts-ignore
-const token401 = jwt.generate(user404DAO);
+const token401 = generateJWT(user404DAO);
 
-// @ts-ignore
 const entry = { title: 'test-title', body: 'test-body', UserId: userDAO.id };
 const entryDAO = models.Entry.build(entry);
 
