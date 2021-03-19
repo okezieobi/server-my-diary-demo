@@ -14,11 +14,8 @@ export default class UserController {
     };
     this.setJWT = async (req, res, next) => {
       const token = await jwt.generate(res.locals.data.user);
-      res.cookie('authorization', token, {
-        httpOnly: process.env.NODE_ENV === 'production',
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-      });
+      const cookieOptions = process.env.NODE_ENV === 'production' ? { httpOnly: true, sameSite: 'none', secure: true } : { httpOnly: true };
+      res.cookie('authorization', token, cookieOptions);
       next();
     };
     this.handleServices = handleServices;
