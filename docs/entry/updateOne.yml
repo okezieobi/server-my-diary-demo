@@ -18,7 +18,7 @@ paths:
           required: true
           description: The id of diary entry to be retrieved.
           schema:
-            type: uuid
+            type: string
       responses:          # server responses
         200:
           description: An object with updated entry details

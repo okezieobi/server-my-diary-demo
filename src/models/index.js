@@ -34,11 +34,12 @@ Object.keys(db).forEach((modelName) => {
 });
 
 if (process.env.NODE_ENV === 'development') {
-  (async () => {
+  const verifyDevDB = async () => {
     await sequelize.authenticate();
     await sequelize.sync({ force: true, match: /dev$/ });
     // no sequelize.sync(); use migrations after writing db for production
-  })().catch((err) => console.error(err));
+  };
+  verifyDevDB().catch((err) => console.error(err));
 }
 
 db.tables.modelTimestamps = (SequelizeDataTypes) => ({

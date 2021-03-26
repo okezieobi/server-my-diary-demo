@@ -7,9 +7,11 @@ describe('User should be able to signup to the app', () => {
   it('Should create a User at "/api/v1/auth/signup" with POST if all request inputs are valid', async () => {
     const { status, body: { data } } = await request(app).post('/api/v1/auth/signup').send(utils.newUser);
     expect(status).toBeNumber().toEqual(201);
-    expect(data).toBeObject().toContainKeys(['user', 'status']);
+    expect(data).toBeObject().toContainKeys(['user', 'status', 'token']);
     expect(data.status).toBeNumber().toEqual(201);
     expect(data.token).toBeString();
+    expect(data.user).toBeObject().toContainKeys(['fullName', 'username', 'email', 'id', 'type', 'createdAt']);
+    expect(data.user.id).toString();
     expect(data.user.fullName).toBeString().toEqual(utils.newUser.fullName);
     expect(data.user.username).toBeString().toEqual(utils.newUser.username);
     expect(data.user.email).toBeString().toEqual(utils.newUser.email);
@@ -95,8 +97,10 @@ describe('User should be able to login to the app', () => {
   it('Should be able login a user at "/api/v1/auth/login" if user and password fields are valid', async () => {
     const { status, body: { data } } = await request(app).post('/api/v1/auth/login').send({ user: utils.user.email || utils.user.username, password: utils.user.password });
     expect(status).toBeNumber().toEqual(200);
+    expect(data).toBeObject().toContainKeys(['user', 'token']);
     expect(data.token).toBeString();
-    expect(data).toBeObject().toContainKeys(['user']);
+    expect(data.user).toBeObject().toContainKeys(['fullName', 'username', 'email', 'id', 'type', 'updatedAt', 'createdAt']);
+    expect(data.user.id).toString();
     expect(data.user.fullName).toBeString().toEqual(utils.user.fullName);
     expect(data.user.username).toBeString().toEqual(utils.user.username);
     expect(data.user.email).toBeString().toEqual(utils.user.email);
